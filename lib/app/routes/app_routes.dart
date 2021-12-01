@@ -9,6 +9,8 @@ abstract class Routes {
   static const CREATE_POST = _Paths.CREATE_POST;
   static const NOTIFICATION = _Paths.NOTIFICATION;
   static const PROFILE = _Paths.PROFILE;
+  static const LOGIN = _Paths.LOGIN;
+  static const REGISTER = _Paths.REGISTER;
 }
 
 abstract class _Paths {
@@ -17,4 +19,6 @@ abstract class _Paths {
   static const CREATE_POST = '/create-post';
   static const NOTIFICATION = '/notification';
   static const PROFILE = '/profile';
+  static const LOGIN = '/login';
+  static const REGISTER = '/register';
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names, prefer_const_constructors
+import 'package:get/get.dart';
 
 import 'package:blog_app/app/modules/create_post/bindings/create_post_binding.dart';
 import 'package:blog_app/app/modules/create_post/views/create_post_view.dart';
@@ -6,16 +6,21 @@ import 'package:blog_app/app/modules/explore/bindings/explore_binding.dart';
 import 'package:blog_app/app/modules/explore/views/explore_view.dart';
 import 'package:blog_app/app/modules/home/bindings/home_binding.dart';
 import 'package:blog_app/app/modules/home/views/home_view.dart';
+import 'package:blog_app/app/modules/login/bindings/login_binding.dart';
+import 'package:blog_app/app/modules/login/views/login_view.dart';
 import 'package:blog_app/app/modules/notification/bindings/notification_binding.dart';
 import 'package:blog_app/app/modules/notification/views/notification_view.dart';
 import 'package:blog_app/app/modules/profile/bindings/profile_binding.dart';
 import 'package:blog_app/app/modules/profile/views/profile_view.dart';
-import 'package:get/get.dart';
+import 'package:blog_app/app/modules/register/bindings/register_binding.dart';
+import 'package:blog_app/app/modules/register/views/register_view.dart';
+
+// ignore_for_file: constant_identifier_names, prefer_const_constructors
 
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.REGISTER;
 
   static final routes = [
     GetPage(
@@ -42,6 +47,16 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGIN,
+      page: () => LoginView(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGISTER,
+      page: () => RegisterView(),
+      binding: RegisterBinding(),
     ),
   ];
 }
