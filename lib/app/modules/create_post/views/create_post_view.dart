@@ -39,27 +39,27 @@ class CreatePostView extends GetView<CreatePostController> {
             const SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: Center(
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.image,
-                        size: 50,
-                      )),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //     height: MediaQuery.of(context).size.height * 0.3,
+            //     child: Center(
+            //       child: IconButton(
+            //           onPressed: () {},
+            //           icon: const Icon(
+            //             Icons.image,
+            //             size: 50,
+            //           )),
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                controller: controller.createPostController,
+                controller: controller.titleController,
                 decoration: InputDecoration(
                   labelStyle: Env.textStyles.text,
                   hintText: 'Topic name?',
@@ -79,7 +79,7 @@ class CreatePostView extends GetView<CreatePostController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                controller: controller.createPostController,
+                controller: controller.descriptionController,
                 decoration: InputDecoration(
                   labelStyle: Env.textStyles.text,
                   hintText: 'Little description about the topic?',
@@ -99,7 +99,7 @@ class CreatePostView extends GetView<CreatePostController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                controller: controller.createPostController,
+                controller: controller.contentController,
                 decoration: InputDecoration(
                   labelStyle: Env.textStyles.text,
                   hintText: 'What do you want to talk about?',
@@ -116,6 +116,22 @@ class CreatePostView extends GetView<CreatePostController> {
                 autofocus: true,
               ),
             ),
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.camera_alt,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.image,
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),

@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class CreatePostController extends GetxController {
-  TextEditingController createPostController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
 
   @override
   void onInit() {

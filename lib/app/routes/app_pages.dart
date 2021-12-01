@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, prefer_const_constructors
 
 import 'package:blog_app/app/modules/create_post/bindings/create_post_binding.dart';
 import 'package:blog_app/app/modules/create_post/views/create_post_view.dart';

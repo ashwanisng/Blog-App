@@ -5,14 +5,16 @@ import 'package:get/get.dart';
 import 'package:blog_app/app/modules/explore/controllers/explore_controller.dart';
 
 class ExploreView extends GetView<ExploreController> {
+  const ExploreView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ExploreView'),
+        title: const Text('ExploreView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'ExploreView is working',
           style: TextStyle(fontSize: 20),

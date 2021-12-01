@@ -15,7 +15,12 @@ class HomeScreenView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Blog App'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text(
+          'Blog App',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       backgroundColor: Env.colors.background,
       body: SizedBox(

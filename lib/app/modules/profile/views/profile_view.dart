@@ -5,14 +5,16 @@ import 'package:get/get.dart';
 import 'package:blog_app/app/modules/profile/controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
+  const ProfileView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ProfileView'),
+        title: const Text('ProfileView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'ProfileView is working',
           style: TextStyle(fontSize: 20),

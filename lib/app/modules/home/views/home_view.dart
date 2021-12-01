@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/create_post/views/create_post_view.dart';
 import 'package:blog_app/app/modules/explore/views/explore_view.dart';
@@ -17,16 +19,18 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Env.colors.background,
-      body: Obx(() => IndexedStack(
-            index: landingPageController.slectedIndex.value,
-            children: [
-              const HomeScreenView(),
-              ExploreView(),
-              const CreatePostView(),
-              NotificationView(),
-              ProfileView(),
-            ],
-          )),
+      body: Obx(
+        () => IndexedStack(
+          index: landingPageController.slectedIndex.value,
+          children: const [
+            HomeScreenView(),
+            ExploreView(),
+            CreatePostView(),
+            NotificationView(),
+            ProfileView(),
+          ],
+        ),
+      ),
       bottomNavigationBar: Obx(
         () => Container(
           color: Env.colors.primaryWhite,
