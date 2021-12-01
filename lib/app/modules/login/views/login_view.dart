@@ -191,7 +191,7 @@ class LoginView extends GetView<LoginController> {
                                     const SizedBox(width: 10),
                                     GestureDetector(
                                       onTap: () {
-                                        Get.offAll(() => RegisterView());
+                                        Get.offAll(() => const RegisterView());
                                       },
                                       child: Text(
                                         "Sign Up",

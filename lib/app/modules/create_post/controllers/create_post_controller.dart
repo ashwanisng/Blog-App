@@ -15,7 +15,7 @@ class CreatePostController extends GetxController {
   PostService postService = Get.find<PostService>();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  Uuid uuid = Uuid();
+  Uuid uuid = const Uuid();
 
   void createPost() {
     postService.uploadUserPost(

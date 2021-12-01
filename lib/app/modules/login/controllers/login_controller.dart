@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_overrides
+
 import 'package:blog_app/app/global/firebase/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

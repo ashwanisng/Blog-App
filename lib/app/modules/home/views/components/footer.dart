@@ -8,7 +8,9 @@ class Footer extends StatelessWidget {
   final int? dislikes;
   final int? comments;
 
-  Footer({required this.likes, required this.dislikes, required this.comments});
+  // ignore: use_key_in_widget_constructors
+  const Footer(
+      {required this.likes, required this.dislikes, required this.comments});
 
   @override
   Widget build(BuildContext context) {

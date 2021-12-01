@@ -35,19 +35,6 @@ class PostService extends GetxController {
         colorText: Colors.white,
         isDismissible: true,
       );
-      print(e);
     }
   }
 }
-/**
- * {
-    required String postId,
-    required String userId,
-    required String username,
-    required String title,
-    required String description,
-    required String content,
-    required int likes,
-    required int disLikes,
-  }
- */
