@@ -24,7 +24,9 @@ class CreatePostView extends GetView<CreatePostController> {
         elevation: 0,
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              controller.createPost();
+            },
             child: Text(
               "Post",
               style: Env.textStyles.text,

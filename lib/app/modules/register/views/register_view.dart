@@ -1,5 +1,6 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/login/views/login_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:blog_app/app/modules/register/controllers/register_controller.dart';
@@ -97,6 +98,24 @@ class RegisterView extends GetView<RegisterController> {
                                 ),
                                 const SizedBox(height: 10),
                                 TextField(
+                                  controller: controller.userNameController,
+                                  keyboardType: TextInputType.text,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    filled: true,
+                                    fillColor: const Color(0xffe7edeb),
+                                    hintText: "@username",
+                                    prefixIcon: Icon(
+                                      Icons.description_outlined,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                TextField(
                                   controller: controller.emailController,
                                   keyboardType: TextInputType.emailAddress,
                                   decoration: InputDecoration(
@@ -113,6 +132,7 @@ class RegisterView extends GetView<RegisterController> {
                                     ),
                                   ),
                                 ),
+
                                 const SizedBox(height: 10),
                                 Obx(
                                   () => TextField(

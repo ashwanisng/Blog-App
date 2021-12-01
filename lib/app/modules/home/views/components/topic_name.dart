@@ -2,7 +2,9 @@ import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:flutter/material.dart';
 
 class TopicName extends StatelessWidget {
-  const TopicName({Key? key}) : super(key: key);
+  final String? topicName;
+
+  const TopicName({Key? key, @required this.topicName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class TopicName extends StatelessWidget {
         right: 4,
       ),
       child: Text(
-        "Topic",
+        topicName!,
         style: Env.textStyles.descriptionText,
       ),
     );

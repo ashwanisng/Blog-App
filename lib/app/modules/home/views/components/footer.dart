@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Footer extends StatelessWidget {
-  const Footer({
-    Key? key,
-  }) : super(key: key);
+  final int? likes;
+  final int? dislikes;
+  final int? comments;
+
+  Footer({required this.likes, required this.dislikes, required this.comments});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class Footer extends StatelessWidget {
                 },
               ),
               // SizedBox(width: ),
-              const Text('124'),
+              Text(likes.toString()),
             ],
           ),
           Row(
@@ -41,7 +43,7 @@ class Footer extends StatelessWidget {
                   Get.back();
                 },
               ),
-              const Text('124'),
+              Text(dislikes.toString()),
             ],
           ),
           Row(
@@ -55,7 +57,7 @@ class Footer extends StatelessWidget {
                   Get.back();
                 },
               ),
-              const Text('12'),
+              Text(comments.toString()),
             ],
           ),
           IconButton(

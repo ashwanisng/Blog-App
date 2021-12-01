@@ -6,12 +6,15 @@ import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
   TextEditingController emailController =
-      TextEditingController(text: "admin@shopify.com");
+      TextEditingController(text: "admin@blog.com");
 
   TextEditingController passwordController =
-      TextEditingController(text: "admin@123");
+      TextEditingController(text: "blog@123");
 
   TextEditingController nameController = TextEditingController(text: "Admin");
+
+  TextEditingController userNameController =
+      TextEditingController(text: "@blogger");
 
   FirebaseAuthService authService = Get.find<FirebaseAuthService>();
 

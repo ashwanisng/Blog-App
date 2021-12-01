@@ -1,4 +1,5 @@
 import 'package:blog_app/app/global/firebase/auth/auth.dart';
+import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/modules/create_post/controllers/create_post_controller.dart';
 import 'package:blog_app/app/modules/explore/controllers/explore_controller.dart';
 import 'package:blog_app/app/modules/home/controllers/home_controller.dart';
@@ -33,14 +34,22 @@ class GlobalBinding extends Bindings {
 
     Get.lazyPut<LoginController>(
       () => LoginController(),
+      fenix: true,
     );
 
     Get.lazyPut<RegisterController>(
       () => RegisterController(),
+      fenix: true,
     );
 
     Get.lazyPut<FirebaseAuthService>(
       () => FirebaseAuthService(),
+      fenix: true,
+    );
+
+    Get.lazyPut<PostService>(
+      () => PostService(),
+      fenix: true,
     );
   }
 }

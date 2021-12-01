@@ -6,10 +6,10 @@ class LoginController extends GetxController {
   //TODO: Implement LoginController
 
   TextEditingController emailController =
-      TextEditingController(text: "admin@shopify.com");
+      TextEditingController(text: "admin@blog.com");
 
   TextEditingController passwordController =
-      TextEditingController(text: "admin@123");
+      TextEditingController(text: "blog@123");
 
   FirebaseAuthService authService = Get.find<FirebaseAuthService>();
 
