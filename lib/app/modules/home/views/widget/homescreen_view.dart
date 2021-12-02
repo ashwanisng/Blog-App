@@ -52,11 +52,7 @@ class HomeScreenView extends GetView<HomeController> {
                     const SizedBox(height: 5),
                     GestureDetector(
                       onTap: () {
-                        print(doc["title"]);
-                        print(doc["content"]);
-                        print(doc["createdAt"]);
-
-                        Get.to(() => PostView(), arguments: {
+                        Get.to(() => const PostView(), arguments: {
                           "title": doc["title"],
                           "content": doc["content"],
                           "createdAt": doc["createdAt"],

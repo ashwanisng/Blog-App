@@ -17,8 +17,6 @@ class PostController extends GetxController {
     title = data['title'];
     body = data['content'];
     date = (data["createdAt"] as Timestamp).toDate();
-
-    print(data);
   }
 
   @override

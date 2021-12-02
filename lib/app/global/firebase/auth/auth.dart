@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:blog_app/app/modules/home/views/home_view.dart';
 import 'package:blog_app/app/modules/login/views/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -72,7 +74,7 @@ class FirebaseAuthService extends GetxController {
   signOut() async {
     await firebaseAuth.signOut().then((value) {
       userData.remove("isLoggedIn");
-      return Get.offAll(LoginView());
+      return Get.offAll(const LoginView());
     });
   }
 }
