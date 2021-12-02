@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   final String uid;
   final String name;
@@ -17,15 +19,15 @@ class UserModel {
     required this.location,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+  factory UserModel.fromDocument(DocumentSnapshot doc) {
     return UserModel(
-      uid: json['uid'],
-      name: json['name'],
-      email: json['email'],
-      photoUrl: json['photoUrl'],
-      userName: json['userName'],
-      bio: json['bio'],
-      location: json['location'],
+      uid: doc['uid'],
+      name: doc['name'],
+      email: doc['email'],
+      photoUrl: doc['photoUrl'],
+      userName: doc['userName'],
+      bio: doc['bio'],
+      location: doc['location'],
     );
   }
 

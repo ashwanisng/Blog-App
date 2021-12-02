@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/profile/controllers/editprofile_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +14,23 @@ class EditProfile extends GetView<EditProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Edit Profile',
-          style: TextStyle(color: Colors.black),
+          style: Env.textStyles.text.copyWith(color: Env.colors.primaryBlue),
         ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              controller.uploadUserDetails();
+            },
+            child: Text("Save",
+                style: Env.textStyles.text
+                    .copyWith(color: Env.colors.primaryBlue)),
+          ),
+        ],
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Env.colors.primaryBlue),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -68,7 +79,7 @@ class EditProfile extends GetView<EditProfileController> {
               ]),
               const SizedBox(height: 20),
               TextField(
-                // controller: controller.nameController,
+                controller: controller.nameController,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -86,7 +97,7 @@ class EditProfile extends GetView<EditProfileController> {
               ),
               const SizedBox(height: 10),
               TextField(
-                // controller: controller.addressontroller,
+                controller: controller.usernameController,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -104,7 +115,7 @@ class EditProfile extends GetView<EditProfileController> {
               ),
               const SizedBox(height: 10),
               TextField(
-                // controller: controller.cityController,
+                controller: controller.emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -122,7 +133,27 @@ class EditProfile extends GetView<EditProfileController> {
               ),
               const SizedBox(height: 10),
               TextField(
-                // controller: controller.stateController,
+                controller: controller.bioController,
+                keyboardType: TextInputType.text,
+                maxLines: 2,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: const Color(0xffe7edeb),
+                  hintText: "Bio",
+                  prefixIcon: Icon(
+                    Icons.description_outlined,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+              TextField(
+                controller: controller.locationController,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -131,43 +162,7 @@ class EditProfile extends GetView<EditProfileController> {
                   ),
                   filled: true,
                   fillColor: const Color(0xffe7edeb),
-                  hintText: "State/Province/Region",
-                  prefixIcon: Icon(
-                    CupertinoIcons.location,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                // controller: controller.zipController,
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: const Color(0xffe7edeb),
-                  hintText: "Zip Code (Postal Code)",
-                  prefixIcon: Icon(
-                    CupertinoIcons.location,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                // controller: controller.countryController,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: const Color(0xffe7edeb),
-                  hintText: "Country",
+                  hintText: "Location",
                   prefixIcon: Icon(
                     CupertinoIcons.location,
                     color: Colors.grey[600],

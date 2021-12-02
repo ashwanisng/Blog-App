@@ -2,6 +2,9 @@
 
 import 'dart:io';
 
+import 'package:blog_app/app/data/model/user.dart';
+import 'package:blog_app/app/global/firebase/database/user_db.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,12 +12,33 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class EditProfileController extends GetxController {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController bioController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+
   var selectImagePath = ''.obs;
 
-  var downloadUrl = '';
+  late String downloadUrl;
 
   late File file;
   FirebaseStorage storage = FirebaseStorage.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  UserDbController userDb = Get.find<UserDbController>();
+
+  uploadUserDetails() {
+    userDb.uploadUserData(UserModel(
+      uid: auth.currentUser!.uid,
+      name: nameController.text.trim(),
+      email: emailController.text.trim(),
+      photoUrl: downloadUrl,
+      userName: usernameController.text.trim(),
+      bio: bioController.text.trim(),
+      location: locationController.text.trim(),
+    ));
+  }
 
   Future selectProfileImage(ImageSource imageSource) async {
     var pickedFile = await ImagePicker().pickImage(source: imageSource);

@@ -1,14 +1,17 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
+import 'package:blog_app/app/data/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UserDb extends GetxController {
+class UserDbController extends GetxController {
   CollectionReference userCollection =
       FirebaseFirestore.instance.collection('Users');
 
   FirebaseAuth auth = FirebaseAuth.instance;
+
+  String? name;
 
   Future<void> uploadUserData(dynamic user) async {
     try {
