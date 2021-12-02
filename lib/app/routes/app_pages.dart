@@ -10,6 +10,8 @@ import 'package:blog_app/app/modules/login/bindings/login_binding.dart';
 import 'package:blog_app/app/modules/login/views/login_view.dart';
 import 'package:blog_app/app/modules/notification/bindings/notification_binding.dart';
 import 'package:blog_app/app/modules/notification/views/notification_view.dart';
+import 'package:blog_app/app/modules/post/bindings/post_binding.dart';
+import 'package:blog_app/app/modules/post/views/post_view.dart';
 import 'package:blog_app/app/modules/profile/bindings/profile_binding.dart';
 import 'package:blog_app/app/modules/profile/views/profile_view.dart';
 import 'package:blog_app/app/modules/register/bindings/register_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.REGISTER,
       page: () => RegisterView(),
       binding: RegisterBinding(),
+    ),
+    GetPage(
+      name: _Paths.POST,
+      page: () => PostView(),
+      binding: PostBinding(),
     ),
   ];
 }

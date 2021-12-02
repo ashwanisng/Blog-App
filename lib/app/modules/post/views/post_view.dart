@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:blog_app/app/modules/post/controllers/post_controller.dart';
+import 'package:intl/intl.dart';
 
 class PostView extends GetView<PostController> {
   const PostView({Key? key}) : super(key: key);
@@ -13,25 +14,56 @@ class PostView extends GetView<PostController> {
     return Scaffold(
       backgroundColor: Env.colors.background,
       appBar: AppBar(
-        title: const Text('Post'),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          SizedBox(
-            child: Text(
-              'Post',
-              style: Env.textStyles.title,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Env.colors.primaryBlue,
             ),
+            onPressed: () {},
           ),
-          const SizedBox(height: 10),
-          SizedBox(
-            child: Text(
-              "Flutter is Google's framework launched in 2018 and designed for cross-platform development based on the DART programming language (originally called Dash), also created by Google. It allows developing an application only once for two platforms: iOS and Android. It also allows building web apps and offers alpha mode for Windows and Linux. Flutter is becoming more and more popular thanks to many instructions available online such as how to create a smooth flutter tutorials, from one of our Flutter developers.The framework was developed when Facebook's React Native ruled the market, and since then Flutter development has become known for simplifying the whole process. What’s more, over the last 3 years it has become a more preferred toolkit, used by 42% of developers, while React Native by only 38% (and dropping). Clearly it shows that Flutter cross-platform development has become more and more popular.",
-              style: Env.textStyles.labelText,
-            ),
-          )
         ],
+        iconTheme: IconThemeData(
+          color: Env.colors.primaryBlue,
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+                  child:
+                      Text(controller.title!, style: Env.textStyles.headline),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(DateFormat.yMMMMEEEEd().format(controller.date!),
+                    style:
+                        Env.textStyles.labelText.copyWith(color: Colors.grey)),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+                  child: Text(
+                    controller.body!,
+                    style: Env.textStyles.smallText,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

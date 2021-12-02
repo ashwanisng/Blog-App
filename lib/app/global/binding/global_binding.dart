@@ -5,6 +5,7 @@ import 'package:blog_app/app/modules/explore/controllers/explore_controller.dart
 import 'package:blog_app/app/modules/home/controllers/home_controller.dart';
 import 'package:blog_app/app/modules/login/controllers/login_controller.dart';
 import 'package:blog_app/app/modules/notification/controllers/notification_controller.dart';
+import 'package:blog_app/app/modules/post/controllers/post_controller.dart';
 import 'package:blog_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:blog_app/app/modules/register/controllers/register_controller.dart';
 import 'package:get/get.dart';
@@ -49,6 +50,11 @@ class GlobalBinding extends Bindings {
 
     Get.lazyPut<PostService>(
       () => PostService(),
+      fenix: true,
+    );
+
+    Get.lazyPut<PostController>(
+      () => PostController(),
       fenix: true,
     );
   }

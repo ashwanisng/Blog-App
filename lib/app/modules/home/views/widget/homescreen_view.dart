@@ -4,6 +4,7 @@ import 'package:blog_app/app/modules/home/views/components/description_text.dart
 import 'package:blog_app/app/modules/home/views/components/footer.dart';
 import 'package:blog_app/app/modules/home/views/components/header.dart';
 import 'package:blog_app/app/modules/home/views/components/topic_name.dart';
+import 'package:blog_app/app/modules/post/views/post_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,12 +41,7 @@ class HomeScreenView extends GetView<HomeController> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (BuildContext context, int index) {
               final DocumentSnapshot doc = snapshot.data!.docs[index];
-              // print(doc["title"]);
-              // print(doc["description"]);
-              // print(doc["content"]);
-              print(doc["userId"]);
-              // print(doc["dislikes"]);
-              // print(doc["comments"]);
+
               return SizedBox(
                 height: MediaQuery.of(context).size.height / 2.4,
                 child: Column(
@@ -54,8 +50,21 @@ class HomeScreenView extends GetView<HomeController> {
                     const Header(),
                     TopicName(topicName: doc["title"]),
                     const SizedBox(height: 5),
-                    DescriptionText(
-                      description: doc["description"],
+                    GestureDetector(
+                      onTap: () {
+                        print(doc["title"]);
+                        print(doc["content"]);
+                        print(doc["createdAt"]);
+
+                        Get.to(() => PostView(), arguments: {
+                          "title": doc["title"],
+                          "content": doc["content"],
+                          "createdAt": doc["createdAt"],
+                        });
+                      },
+                      child: DescriptionText(
+                        description: doc["description"],
+                      ),
                     ),
                     const SizedBox(height: 5),
                     const Divider(),

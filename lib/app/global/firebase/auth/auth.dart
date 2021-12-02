@@ -31,7 +31,7 @@ class FirebaseAuthService extends GetxController {
         print('The account already exists for that email.');
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       Get.snackbar(
         'Error login account',
         "Try Again",
