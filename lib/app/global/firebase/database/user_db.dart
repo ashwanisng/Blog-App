@@ -1,5 +1,4 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
-import 'package:blog_app/app/data/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ class UserDbController extends GetxController {
       FirebaseFirestore.instance.collection('Users');
 
   FirebaseAuth auth = FirebaseAuth.instance;
+  var userData = [].obs;
 
   String? name;
 
@@ -37,6 +37,22 @@ class UserDbController extends GetxController {
         colorText: Colors.white,
         isDismissible: true,
       );
+    }
+  }
+
+  fetchUserData() async {
+    try {
+      var snapshot = await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(auth.currentUser!.uid)
+          .collection("users")
+          .get();
+
+      userData.value = snapshot.docs.map((e) => (e.data())).toList();
+
+      update();
+    } catch (e) {
+      // print(e);/
     }
   }
 }
