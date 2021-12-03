@@ -12,7 +12,7 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
 
-    userDb.fetchUserData();
+    userDb.fetchAllUserDetails();
   }
 
   @override

@@ -47,21 +47,21 @@ class HomeScreenView extends GetView<HomeController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    controller.userDb.userData.isEmpty
-                        ? const Header(
-                            username: "@username",
-                            name: "Name",
-                            image:
-                                'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80',
-                          )
-                        : Obx(
-                            () => Header(
+                    Obx(
+                      () => controller.userDb.userData.isEmpty
+                          ? const Header(
+                              username: "@username",
+                              name: "Name",
+                              image:
+                                  'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80',
+                            )
+                          : Header(
                               username: controller.userDb.userData[0]
                                   ['userName'],
                               name: controller.userDb.userData[0]['name'],
                               image: controller.userDb.userData[0]['photoUrl'],
                             ),
-                          ),
+                    ),
                     TopicName(topicName: doc["title"]),
                     const SizedBox(height: 5),
                     GestureDetector(

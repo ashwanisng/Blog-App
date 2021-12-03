@@ -28,42 +28,42 @@ class ProfileView extends GetView<ProfileController> {
               margin: const EdgeInsets.all(8),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: controller.userDbController.userData.isEmpty
-                    ? Row(
-                        children: [
-                          const SizedBox(
-                            width: 64,
-                            height: 64,
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80'),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                // Get.to(() => EditProfileView());
-                              },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Name',
-                                    style: Env.textStyles.text,
-                                  ),
-                                  Text(
-                                    '@userName',
-                                    style: Env.textStyles.labelText,
-                                  ),
-                                ],
+                child: Obx(
+                  () => controller.userDbController.userData.isEmpty
+                      ? Row(
+                          children: [
+                            const SizedBox(
+                              width: 64,
+                              height: 64,
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80'),
                               ),
                             ),
-                          )
-                        ],
-                      )
-                    : Obx(
-                        () => Row(
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Get.to(() => EditProfileView());
+                                },
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Name',
+                                      style: Env.textStyles.text,
+                                    ),
+                                    Text(
+                                      '@userName',
+                                      style: Env.textStyles.labelText,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      : Row(
                           children: [
                             SizedBox(
                               width: 64,
@@ -119,7 +119,7 @@ class ProfileView extends GetView<ProfileController> {
                             )
                           ],
                         ),
-                      ),
+                ),
               ),
             ),
             CustomCardView(
@@ -165,3 +165,7 @@ class ProfileView extends GetView<ProfileController> {
     );
   }
 }
+/**
+ * ? 
+                    :
+ */
