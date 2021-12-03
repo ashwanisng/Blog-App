@@ -14,57 +14,112 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ProfileView'),
-        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          'Account',
+          style: Env.textStyles.text.copyWith(color: Env.colors.primaryBlue),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Obx(
-              () => Card(
-                margin: const EdgeInsets.all(8),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 64,
-                        height: 64,
-                        child: controller.photoUrl.value.isEmpty
-                            ? const CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80'),
-                              )
-                            : CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                  controller.photoUrl.value,
+            Card(
+              margin: const EdgeInsets.all(8),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: controller.userDbController.userData.isEmpty
+                    ? Row(
+                        children: [
+                          const SizedBox(
+                            width: 64,
+                            height: 64,
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80'),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                // Get.to(() => EditProfileView());
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Name',
+                                    style: Env.textStyles.text,
+                                  ),
+                                  Text(
+                                    '@userName',
+                                    style: Env.textStyles.labelText,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    : Obx(
+                        () => Row(
+                          children: [
+                            SizedBox(
+                              width: 64,
+                              height: 64,
+                              child: controller.userDbController.userData[0]
+                                          ['photoUrl'] ==
+                                      null
+                                  ? const CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                          'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80'),
+                                    )
+                                  : CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        controller.userDbController.userData[0]
+                                            ['photoUrl'],
+                                      ),
+                                    ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Get.to(() => EditProfileView());
+                                },
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      controller.userDbController
+                                              .userData[0]['name']
+                                              .toString()
+                                              .isEmpty
+                                          ? 'Name'
+                                          : controller.userDbController
+                                              .userData[0]['name']
+                                              .toString(),
+                                      style: Env.textStyles.text,
+                                    ),
+                                    Text(
+                                      controller.userDbController
+                                              .userData[0]['userName']
+                                              .toString()
+                                              .isEmpty
+                                          ? '@userName'
+                                          : controller.userDbController
+                                              .userData[0]['userName']
+                                              .toString(),
+                                      style: Env.textStyles.labelText,
+                                    ),
+                                  ],
                                 ),
                               ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            // Get.to(() => EditProfileView());
-                          },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                controller.name.value.toString(),
-                                style: Env.textStyles.text,
-                              ),
-                              Text(
-                                controller.userName.value.toString(),
-                                style: Env.textStyles.labelText,
-                              ),
-                            ],
-                          ),
+                            )
+                          ],
                         ),
-                      )
-                    ],
-                  ),
-                ),
+                      ),
               ),
             ),
             CustomCardView(
@@ -88,10 +143,12 @@ class ProfileView extends GetView<ProfileController> {
               onPress: () {},
             ),
             CustomCardView(
-              cardName: 'My reviews',
-              cardSubTitile: "Reviews for 4 items",
-              icon: Icons.arrow_forward_ios,
-              onPress: () {},
+              cardName: 'Logout',
+              cardSubTitile: "Sign out of your account",
+              icon: Icons.logout,
+              onPress: () {
+                controller.authService.signOut();
+              },
             ),
             CustomCardView(
               cardName: 'Settings',

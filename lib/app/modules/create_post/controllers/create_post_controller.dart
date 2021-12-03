@@ -2,6 +2,7 @@
 
 import 'package:blog_app/app/data/model/post.dart';
 import 'package:blog_app/app/global/firebase/database/post_db.dart';
+import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,8 @@ class CreatePostController extends GetxController {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   Uuid uuid = const Uuid();
+
+  UserDbController userDbController = Get.find<UserDbController>();
 
   void createPost() {
     postService.uploadUserPost(

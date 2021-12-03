@@ -17,10 +17,12 @@ class GlobalBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<HomeController>(
       () => HomeController(),
+      fenix: true,
     );
 
     Get.lazyPut<CreatePostController>(
       () => CreatePostController(),
+      fenix: true,
     );
 
     Get.lazyPut<ExploreController>(
@@ -33,6 +35,7 @@ class GlobalBinding extends Bindings {
 
     Get.lazyPut<ProfileController>(
       () => ProfileController(),
+      fenix: true,
     );
 
     Get.lazyPut<LoginController>(

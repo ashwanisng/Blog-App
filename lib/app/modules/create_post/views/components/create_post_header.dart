@@ -3,8 +3,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CreatePostHeader extends StatelessWidget {
+  final String image;
+  final String name;
+  final String userName;
+
   const CreatePostHeader({
     Key? key,
+    required this.image,
+    required this.name,
+    required this.userName,
   }) : super(key: key);
 
   @override
@@ -16,9 +23,8 @@ class CreatePostHeader extends StatelessWidget {
           child: Container(
             decoration: const BoxDecoration(shape: BoxShape.circle),
             // width: double.infinity,
-            child: const CircleAvatar(
-              backgroundImage: CachedNetworkImageProvider(
-                  "https://www.seti.org/sites/default/files/styles/original/public/2019-09/Zork%20alien%20head%20PPR.jpg?itok=T7eTYzCZ"),
+            child: CircleAvatar(
+              backgroundImage: CachedNetworkImageProvider(image),
               radius: 26,
             ),
           ),
@@ -29,11 +35,11 @@ class CreatePostHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "John Doe",
+              name,
               style: Env.textStyles.title,
             ),
             Text(
-              "@johndoe",
+              userName,
               style: Env.textStyles.labelText,
             ),
           ],
