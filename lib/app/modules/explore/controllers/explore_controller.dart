@@ -11,24 +11,10 @@ class ExploreController extends GetxController {
   TextEditingController searchController = TextEditingController();
 
   UserDbController userDbController = Get.find<UserDbController>();
-  var data;
-
-  search() {
-    try {
-      if (searchController.text.isNotEmpty) {
-        data = userDbController.searchUser(searchController.text);
-      }
-    } catch (e) {
-      print(e);
-    } catch (e) {}
-  }
 
   @override
   void onInit() {
     super.onInit();
-
-    search();
-    print(data);
 
     // searchUser(searchController.text);
   }

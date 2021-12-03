@@ -26,7 +26,9 @@ class ExploreView extends GetView<ExploreController> {
             fillColor: const Color(0xffe7edeb),
             suffixIcon: IconButton(
               icon: const Icon(Icons.search),
-              onPressed: () => controller.search(),
+              onPressed: () => controller.userDbController.searchUser(
+                controller.searchController.text,
+              ),
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
@@ -40,21 +42,10 @@ class ExploreView extends GetView<ExploreController> {
         () => controller.userDbController.searchResultList.isEmpty
             ? NoSearchFound()
             : SearchResult(
-                searchedUser: controller
-                    .userDbController.searchResultList.length
-                    .toString(),
+                searchedUser: controller.userDbController.searchResultList[0]
+                    ["userName"],
               ),
       ),
     );
   }
 }
-/**
- * controller.userDbController.searchResultList.isEmpty
-          ? NoSearchFound()
-          : Obx(
-              () => SearchResult(
-                searchedUser: controller.userDbController.searchResultList[0]
-                    ['userName'],
-              ),
-            ),
- */
