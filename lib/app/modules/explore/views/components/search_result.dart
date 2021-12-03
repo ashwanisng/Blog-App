@@ -29,10 +29,7 @@ class SearchResult extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(
                 radius: 30,
-                backgroundImage: NetworkImage(
-                  userImageUrl ??
-                      'https://avatars3.githubusercontent.com/u/52709853?s=460&u=f9f8b8d8f9f8b8d8f9f8b8d8f9f8b8d8f9f8b8d8&v=4',
-                ),
+                backgroundImage: NetworkImage(userImageUrl),
               ),
             ),
             Padding(

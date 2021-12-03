@@ -3,6 +3,7 @@ import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:blog_app/app/modules/create_post/controllers/create_post_controller.dart';
 import 'package:blog_app/app/modules/explore/controllers/explore_controller.dart';
+import 'package:blog_app/app/modules/explore/controllers/view_user_controller.dart';
 import 'package:blog_app/app/modules/home/controllers/home_controller.dart';
 import 'package:blog_app/app/modules/login/controllers/login_controller.dart';
 import 'package:blog_app/app/modules/notification/controllers/notification_controller.dart';
@@ -71,6 +72,11 @@ class GlobalBinding extends Bindings {
 
     Get.lazyPut<UserDbController>(
       () => UserDbController(),
+      fenix: true,
+    );
+
+    Get.lazyPut<ViewUserController>(
+      () => ViewUserController(),
       fenix: true,
     );
   }

@@ -1,6 +1,7 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/explore/views/components/no_search.dart';
 import 'package:blog_app/app/modules/explore/views/components/search_result.dart';
+import 'package:blog_app/app/modules/explore/views/widgets/view_user_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -41,13 +42,30 @@ class ExploreView extends GetView<ExploreController> {
       body: Obx(
         () => controller.userDbController.searchResultList.isEmpty
             ? const Center(child: NoSearchFound())
-            : SearchResult(
-                userUserName: controller.userDbController.searchResultList[0]
-                    ["userName"],
-                userImageUrl: controller.userDbController.searchResultList[0]
-                    ["photoUrl"],
-                userName: controller.userDbController.searchResultList[0]
-                    ["name"],
+            : GestureDetector(
+                onTap: () {
+                  Get.to(
+                    () => const ViewUser(),
+                    arguments: {
+                      'name': controller.userDbController.searchResultList[0]
+                          ["name"],
+                      'userName': controller
+                          .userDbController.searchResultList[0]["userName"],
+                      'image': controller.userDbController.searchResultList[0]
+                          ["photoUrl"],
+                      "bio": controller.userDbController.searchResultList[0]
+                          ["bio"],
+                    },
+                  );
+                },
+                child: SearchResult(
+                  userUserName: controller.userDbController.searchResultList[0]
+                      ["userName"],
+                  userImageUrl: controller.userDbController.searchResultList[0]
+                      ["photoUrl"],
+                  userName: controller.userDbController.searchResultList[0]
+                      ["name"],
+                ),
               ),
       ),
     );
