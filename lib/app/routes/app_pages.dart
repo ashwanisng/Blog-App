@@ -2,6 +2,10 @@ import 'package:get/get.dart';
 
 import 'package:blog_app/app/modules/create_post/bindings/create_post_binding.dart';
 import 'package:blog_app/app/modules/create_post/views/create_post_view.dart';
+import 'package:blog_app/app/modules/entry/bindings/entry_binding.dart';
+import 'package:blog_app/app/modules/entry/bindings/entry_binding.dart';
+import 'package:blog_app/app/modules/entry/views/entry_view.dart';
+import 'package:blog_app/app/modules/entry/views/entry_view.dart';
 import 'package:blog_app/app/modules/explore/bindings/explore_binding.dart';
 import 'package:blog_app/app/modules/explore/views/explore_view.dart';
 import 'package:blog_app/app/modules/home/bindings/home_binding.dart';
@@ -22,7 +26,7 @@ import 'package:blog_app/app/modules/register/views/register_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.REGISTER;
+  static const INITIAL = Routes.ENTRY;
 
   static final routes = [
     GetPage(
@@ -64,6 +68,11 @@ class AppPages {
       name: _Paths.POST,
       page: () => PostView(),
       binding: PostBinding(),
+    ),
+    GetPage(
+      name: _Paths.ENTRY,
+      page: () => EntryView(),
+      binding: EntryBinding(),
     ),
   ];
 }
