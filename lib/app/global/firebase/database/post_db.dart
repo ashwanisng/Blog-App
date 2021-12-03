@@ -11,8 +11,11 @@ class PostService extends GetxController {
 
   List posts = [];
 
+  var isUploading = false.obs;
+
   Future<void> uploadUserPost(dynamic posts) async {
     try {
+      isUploading.value = true;
       await postRef
           .doc(auth.currentUser!.uid)
           .collection("posts")
@@ -35,6 +38,8 @@ class PostService extends GetxController {
         colorText: Colors.white,
         isDismissible: true,
       );
+    } finally {
+      isUploading.value = false;
     }
   }
 }

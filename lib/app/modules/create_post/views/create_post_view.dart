@@ -38,31 +38,36 @@ class CreatePostView extends GetView<CreatePostController> {
         child: Column(
           children: [
             Obx(
-              () => controller.userDbController.userData.isEmpty
-                  ? const CreatePostHeader(
-                      name: "Name",
-                      image:
-                          'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80',
-                      userName: "@username",
+              () => controller.postService.isUploading.value
+                  ? LinearProgressIndicator(
+                      color: Env.colors.primaryGreen,
                     )
-                  : CreatePostHeader(
-                      name: controller.userDbController.userData[0]['name']
-                              .toString()
-                              .isEmpty
-                          ? "Name"
-                          : controller.userDbController.userData[0]['name']
-                              .toString(),
-                      image: controller.userDbController.userData[0]
-                              ['photoUrl'] ??
-                          'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80',
-                      userName: controller
-                              .userDbController.userData[0]['userName']
-                              .toString()
-                              .isEmpty
-                          ? "@username"
-                          : controller.userDbController.userData[0]['userName']
-                              .toString(),
-                    ),
+                  : controller.userDbController.userData.isEmpty
+                      ? const CreatePostHeader(
+                          name: "Name",
+                          image:
+                              'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80',
+                          userName: "@username",
+                        )
+                      : CreatePostHeader(
+                          name: controller.userDbController.userData[0]['name']
+                                  .toString()
+                                  .isEmpty
+                              ? "Name"
+                              : controller.userDbController.userData[0]['name']
+                                  .toString(),
+                          image: controller.userDbController.userData[0]
+                                  ['photoUrl'] ??
+                              'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80',
+                          userName: controller
+                                  .userDbController.userData[0]['userName']
+                                  .toString()
+                                  .isEmpty
+                              ? "@username"
+                              : controller
+                                  .userDbController.userData[0]['userName']
+                                  .toString(),
+                        ),
             ),
             const SizedBox(
               height: 20,

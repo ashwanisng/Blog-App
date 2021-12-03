@@ -1,3 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/home/controllers/home_controller.dart';
 import 'package:blog_app/app/modules/home/views/components/description_text.dart';
@@ -5,10 +10,7 @@ import 'package:blog_app/app/modules/home/views/components/footer.dart';
 import 'package:blog_app/app/modules/home/views/components/header.dart';
 import 'package:blog_app/app/modules/home/views/components/topic_name.dart';
 import 'package:blog_app/app/modules/post/views/post_view.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class HomeScreenView extends GetView<HomeController> {
   const HomeScreenView({Key? key}) : super(key: key);
@@ -30,6 +32,7 @@ class HomeScreenView extends GetView<HomeController> {
             .collection("posts")
             .doc(controller.auth.currentUser!.uid)
             .collection("posts")
+            .orderBy("createdAt", descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
@@ -41,9 +44,11 @@ class HomeScreenView extends GetView<HomeController> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (BuildContext context, int index) {
               final DocumentSnapshot doc = snapshot.data!.docs[index];
+              DateTime time =
+                  (DateTime.parse(doc["createdAt"].toDate().toString()));
 
               return SizedBox(
-                height: MediaQuery.of(context).size.height / 2.4,
+                height: MediaQuery.of(context).size.height / 2.3,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -54,12 +59,14 @@ class HomeScreenView extends GetView<HomeController> {
                               name: "Name",
                               image:
                                   'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80',
+                              time: "few day ago",
                             )
                           : Header(
                               username: controller.userDb.userData[0]
                                   ['userName'],
                               name: controller.userDb.userData[0]['name'],
                               image: controller.userDb.userData[0]['photoUrl'],
+                              time: timeago.format(time),
                             ),
                     ),
                     TopicName(topicName: doc["title"]),
@@ -77,7 +84,7 @@ class HomeScreenView extends GetView<HomeController> {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    const Divider(),
+                    // const Divider(),
                     Footer(
                       likes: doc["likes"],
                       dislikes: doc["dislikes"],

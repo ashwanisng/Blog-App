@@ -6,12 +6,14 @@ class Header extends StatelessWidget {
   final String image;
   final String name;
   final String username;
+  final String time;
 
   const Header({
     Key? key,
     required this.image,
     required this.name,
     required this.username,
+    required this.time,
   }) : super(key: key);
 
   @override
@@ -41,7 +43,8 @@ class Header extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: Env.textStyles.title,
+                style:
+                    Env.textStyles.text.copyWith(fontWeight: FontWeight.w600),
               ),
               Text(username, style: Env.textStyles.labelText),
             ],
@@ -51,7 +54,7 @@ class Header extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                "2 days ago",
+                time,
                 style: Env.textStyles.labelText,
                 // textAlign: TextAlign.right,
               ),

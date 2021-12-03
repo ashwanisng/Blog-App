@@ -40,10 +40,14 @@ class ExploreView extends GetView<ExploreController> {
       ),
       body: Obx(
         () => controller.userDbController.searchResultList.isEmpty
-            ? NoSearchFound()
+            ? const Center(child: NoSearchFound())
             : SearchResult(
-                searchedUser: controller.userDbController.searchResultList[0]
+                userUserName: controller.userDbController.searchResultList[0]
                     ["userName"],
+                userImageUrl: controller.userDbController.searchResultList[0]
+                    ["photoUrl"],
+                userName: controller.userDbController.searchResultList[0]
+                    ["name"],
               ),
       ),
     );

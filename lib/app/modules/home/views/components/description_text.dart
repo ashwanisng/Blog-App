@@ -17,7 +17,7 @@ class DescriptionText extends StatelessWidget {
       child: Text(
         description ?? '',
         style: Env.textStyles.smallText,
-        maxLines: 5,
+        maxLines: 4,
         overflow: TextOverflow.ellipsis,
       ),
     );
