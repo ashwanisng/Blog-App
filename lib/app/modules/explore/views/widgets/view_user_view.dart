@@ -124,13 +124,53 @@ class ViewUser extends GetView<ViewUserController> {
                           ),
                         ],
                       ),
-                      MaterialButton(
-                        onPressed: () {},
-                        child: Text("Follow"),
-                        color: Env.colors.primaryIndigo,
-                        textColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                      Obx(
+                        () => MaterialButton(
+                          onPressed: () {
+                            controller.followerFollowingDb.isFollowing.value ==
+                                    true
+                                ? controller.followerFollowingDb.isFollowing
+                                    .value = false
+                                : controller.followerFollowingDb.isFollowing
+                                    .value = true;
+
+                            if (controller
+                                    .followerFollowingDb.isFollowing.value ==
+                                true) {
+                              controller.followerFollowingDb.addFollowing(
+                                currentUserId: controller
+                                    .userDbController.auth.currentUser!.uid,
+                                followingId: controller.uid!,
+                              );
+
+                              controller.followerFollowingDb.addFollower(
+                                currentUserId: controller.uid!,
+                                followerId: controller
+                                    .userDbController.auth.currentUser!.uid,
+                              );
+                            } else {
+                              controller.followerFollowingDb.removeFollowing(
+                                currentUserId: controller
+                                    .userDbController.auth.currentUser!.uid,
+                                followingId: controller.uid!,
+                              );
+
+                              controller.followerFollowingDb.removeFollower(
+                                currentUserId: controller.uid!,
+                                followerId: controller
+                                    .userDbController.auth.currentUser!.uid,
+                              );
+                            }
+                          },
+                          child:
+                              controller.followerFollowingDb.isFollowing.isTrue
+                                  ? const Text("Following")
+                                  : const Text("Follow"),
+                          color: Env.colors.primaryIndigo,
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                       ),
                     ],
