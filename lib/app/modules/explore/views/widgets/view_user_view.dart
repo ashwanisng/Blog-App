@@ -179,6 +179,7 @@ class ViewUser extends GetView<ViewUserController> {
               ],
             ),
           ),
+          const Divider(thickness: 2),
         ],
       ),
     );
