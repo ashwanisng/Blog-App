@@ -39,7 +39,7 @@ class UserDbController extends GetxController {
 
   Future<void> fetchAllUserDetails() async {
     FirebaseAuth _auth = FirebaseAuth.instance;
-    ;
+
     try {
       var snapshot = await FirebaseFirestore.instance
           .collection("users")
@@ -50,7 +50,7 @@ class UserDbController extends GetxController {
 
       update();
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -63,7 +63,7 @@ class UserDbController extends GetxController {
 
       searchResultList.value = snapshot.docs.map((e) => (e.data())).toList();
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 }

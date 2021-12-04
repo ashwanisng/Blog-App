@@ -1,4 +1,5 @@
 import 'package:blog_app/app/global/firebase/auth/auth.dart';
+import 'package:blog_app/app/global/firebase/database/follower_following_db.dart';
 import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:blog_app/app/modules/create_post/controllers/create_post_controller.dart';
@@ -77,6 +78,11 @@ class GlobalBinding extends Bindings {
 
     Get.lazyPut<ViewUserController>(
       () => ViewUserController(),
+      fenix: true,
+    );
+
+    Get.lazyPut<FollowerFollowingDb>(
+      () => FollowerFollowingDb(),
       fenix: true,
     );
   }

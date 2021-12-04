@@ -55,6 +55,8 @@ class ExploreView extends GetView<ExploreController> {
                           ["photoUrl"],
                       "bio": controller.userDbController.searchResultList[0]
                           ["bio"],
+                      "uid": controller.userDbController.searchResultList[0]
+                          ["uid"],
                     },
                   );
                 },

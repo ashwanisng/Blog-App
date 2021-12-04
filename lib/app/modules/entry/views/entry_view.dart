@@ -10,6 +10,8 @@ import 'package:get_storage/get_storage.dart';
 class EntryView extends GetView<EntryController> {
   final userData = GetStorage();
 
+  EntryView({Key? key}) : super(key: key);
+
   void checkIfLoggedInOrNot() {
     if (userData.read("isLoggedIn") == true) {
       Get.offAll(() => HomeView());

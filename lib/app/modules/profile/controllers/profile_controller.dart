@@ -13,9 +13,6 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     userDbController.fetchAllUserDetails();
-
-    print(userDbController.userData.length);
-
     super.onInit();
   }
 
