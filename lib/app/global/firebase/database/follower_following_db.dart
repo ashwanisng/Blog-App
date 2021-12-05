@@ -16,7 +16,7 @@ class FollowerFollowingDb extends GetxController {
   }) async {
     await followingRef
         .doc(currentUserId)
-        .collection('following')
+        .collection('userFollowing')
         .doc(followingId)
         .set({'id': followingId});
   }
@@ -27,7 +27,7 @@ class FollowerFollowingDb extends GetxController {
   }) async {
     await followerRef
         .doc(currentUserId)
-        .collection('followers')
+        .collection('userFollowers')
         .doc(followerId)
         .set({'id': followerId});
   }
@@ -38,7 +38,7 @@ class FollowerFollowingDb extends GetxController {
   }) async {
     await followingRef
         .doc(currentUserId)
-        .collection('following')
+        .collection('userFollowing')
         .doc(followingId)
         .get()
         .then((value) {
@@ -54,7 +54,7 @@ class FollowerFollowingDb extends GetxController {
   }) async {
     await followerRef
         .doc(currentUserId)
-        .collection('followers')
+        .collection('userFollowers')
         .doc(followerId)
         .get()
         .then((value) {

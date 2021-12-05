@@ -31,7 +31,7 @@ class HomeScreenView extends GetView<HomeController> {
         stream: FirebaseFirestore.instance
             .collection("posts")
             .doc(controller.auth.currentUser!.uid)
-            .collection("posts")
+            .collection("userPosts")
             .orderBy("createdAt", descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

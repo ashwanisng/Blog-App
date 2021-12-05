@@ -18,7 +18,7 @@ class PostService extends GetxController {
       isUploading.value = true;
       await postRef
           .doc(auth.currentUser!.uid)
-          .collection("posts")
+          .collection("userPosts")
           .add(posts.toJson());
 
       Get.snackbar(
