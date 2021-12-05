@@ -14,11 +14,13 @@ class DescriptionText extends StatelessWidget {
         left: 8,
         right: 4,
       ),
-      child: Text(
-        description ?? '',
-        style: Env.textStyles.smallText,
-        maxLines: 4,
-        overflow: TextOverflow.ellipsis,
+      child: Flexible(
+        child: Text(
+          description ?? '',
+          style: Env.textStyles.smallText,
+          maxLines: 4,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
     );
   }

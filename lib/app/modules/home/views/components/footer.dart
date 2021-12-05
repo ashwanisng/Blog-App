@@ -7,10 +7,24 @@ class Footer extends StatelessWidget {
   final int? likes;
   final int? dislikes;
   final int? comments;
+  final Icon likeIcon;
+  final Icon dislikeIcon;
+
+  final Function()? onLikeOnPressed;
+  final Function()? onDislikeOnPressed;
+  final Function()? onCommentOnPressed;
 
   // ignore: use_key_in_widget_constructors
-  const Footer(
-      {required this.likes, required this.dislikes, required this.comments});
+  const Footer({
+    required this.likes,
+    required this.dislikes,
+    required this.comments,
+    required this.onLikeOnPressed,
+    required this.onDislikeOnPressed,
+    required this.onCommentOnPressed,
+    required this.likeIcon,
+    required this.dislikeIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +36,8 @@ class Footer extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                icon: Icon(
-                  Icons.thumb_up_off_alt,
-                  color: Env.colors.primaryBlue,
-                ),
-                onPressed: () {
-                  Get.back();
-                },
+                icon: likeIcon,
+                onPressed: onLikeOnPressed,
               ),
               // SizedBox(width: ),
               Text(likes.toString()),
@@ -37,13 +46,8 @@ class Footer extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                icon: const Icon(
-                  Icons.thumb_down_alt_outlined,
-                  color: Colors.red,
-                ),
-                onPressed: () {
-                  Get.back();
-                },
+                icon: dislikeIcon,
+                onPressed: onDislikeOnPressed,
               ),
               Text(dislikes.toString()),
             ],
@@ -55,9 +59,7 @@ class Footer extends StatelessWidget {
                   Icons.comment,
                   color: Env.colors.primaryGray,
                 ),
-                onPressed: () {
-                  Get.back();
-                },
+                onPressed: onCommentOnPressed,
               ),
               Text(comments.toString()),
             ],

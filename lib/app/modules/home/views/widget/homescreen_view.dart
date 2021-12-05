@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/home/controllers/home_controller.dart';
 import 'package:blog_app/app/modules/home/views/components/description_text.dart';
@@ -30,8 +29,8 @@ class HomeScreenView extends GetView<HomeController> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("posts")
-            .doc(controller.auth.currentUser!.uid)
-            .collection("userPosts")
+            // .doc(controller.auth.currentUser!.uid)
+            // .collection("userPosts")
             .orderBy("createdAt", descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -85,10 +84,55 @@ class HomeScreenView extends GetView<HomeController> {
                     ),
                     const SizedBox(height: 5),
                     // const Divider(),
-                    Footer(
-                      likes: doc["likes"],
-                      dislikes: doc["dislikes"],
-                      comments: 0,
+                    Obx(
+                      () => Footer(
+                        likes: doc["likes"],
+                        likeIcon: controller.postService.isLiked.value
+                            ? Icon(
+                                Icons.thumb_up_alt_sharp,
+                                color: Env.colors.primaryBlue,
+                              )
+                            : const Icon(
+                                Icons.thumb_up_alt_sharp,
+                                color: Colors.grey,
+                              ),
+                        onLikeOnPressed: () {
+                          controller.postService.isLiked.value == true
+                              ? controller.postService.isLiked.value = false
+                              : controller.postService.isLiked.value = true;
+
+                          if (controller.postService.isLiked.value == true) {
+                            controller.postService.like();
+                          } else {
+                            controller.postService.decreaseLike();
+                          }
+                        },
+                        dislikes: doc["dislikes"],
+                        dislikeIcon: controller.postService.isDisliked.value
+                            ? const Icon(
+                                Icons.thumb_down_sharp,
+                                color: Colors.red,
+                              )
+                            : const Icon(
+                                Icons.thumb_up_alt_sharp,
+                                color: Colors.grey,
+                              ),
+                        onDislikeOnPressed: () {
+                          controller.postService.isDisliked.value == true
+                              ? controller.postService.isDisliked.value = false
+                              : controller.postService.isDisliked.value = true;
+
+                          if (controller.postService.isDisliked.value == true) {
+                            controller.postService.disLikeCountIncrease();
+                          } else {
+                            controller.postService.decreaseDisLikeCount();
+                          }
+                        },
+                        comments: 0,
+                        onCommentOnPressed: () {
+                          // controller.commentOnPressed(doc);
+                        },
+                      ),
                     ),
                     const Divider()
                   ],

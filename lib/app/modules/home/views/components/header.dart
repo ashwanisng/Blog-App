@@ -25,47 +25,57 @@ class Header extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 8, right: 4),
-            child: Container(
-              decoration: const BoxDecoration(shape: BoxShape.circle),
-              // width: double.infinity,
-              child: CircleAvatar(
-                backgroundImage: CachedNetworkImageProvider(
-                  image,
+            child: Expanded(
+              child: Container(
+                decoration: const BoxDecoration(shape: BoxShape.circle),
+                // width: double.infinity,
+                child: CircleAvatar(
+                  backgroundImage: CachedNetworkImageProvider(
+                    image,
+                  ),
+                  radius: 26,
                 ),
-                radius: 26,
               ),
             ),
           ),
           // const SizedBox(width: 8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                name,
-                style:
-                    Env.textStyles.text.copyWith(fontWeight: FontWeight.w600),
-              ),
-              Text(username, style: Env.textStyles.labelText),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  name,
+                  style:
+                      Env.textStyles.text.copyWith(fontWeight: FontWeight.w600),
+                ),
+                Text(username, style: Env.textStyles.labelText),
+              ],
+            ),
           ),
           const SizedBox(width: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                time,
-                style: Env.textStyles.labelText,
-                // textAlign: TextAlign.right,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.more_vert,
-                  color: Colors.grey,
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Flexible(
+                  child: Text(
+                    time,
+                    style: Env.textStyles.labelText,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    // textAlign: TextAlign.right,
+                  ),
                 ),
-              ),
-            ],
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.more_vert,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),

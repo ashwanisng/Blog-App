@@ -13,9 +13,11 @@ class TopicName extends StatelessWidget {
         left: 8,
         right: 4,
       ),
-      child: Text(
-        topicName!,
-        style: Env.textStyles.descriptionText,
+      child: Flexible(
+        child: Text(
+          topicName!,
+          style: Env.textStyles.descriptionText,
+        ),
       ),
     );
   }
