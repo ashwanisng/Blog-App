@@ -11,6 +11,43 @@ class FollowerFollowingDb extends GetxController {
   CollectionReference followerRef =
       FirebaseFirestore.instance.collection('followers');
 
+  var followingList = [];
+
+  var postList = [];
+
+  var postCollection = [].obs;
+
+  Future<void> getListOfUserFollowing() async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    try {
+      var snapshot = await FirebaseFirestore.instance
+          .collection("following")
+          .doc(_auth.currentUser!.uid)
+          .collection("userFollowing")
+          .get();
+
+      followingList = snapshot.docs.map((doc) => doc.id).toList();
+
+      for (var i = 0; i < followingList.length; i++) {
+        var snapshot = await FirebaseFirestore.instance
+            .collection('posts')
+            .doc(followingList[i])
+            .collection("userPosts")
+            .orderBy('createdAt', descending: true)
+            .get();
+
+        postList += snapshot.docs.map((e) => (e.data())).toList();
+      }
+
+      postCollection.value = postList;
+
+      print(postCollection.length);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   Future<void> addFollowing({
     required String currentUserId,
     required String followingId,

@@ -13,18 +13,20 @@ class HomeController extends GetxController {
 
   PostService postService = Get.find<PostService>();
 
-  // FollowerFollowingDb followerFollowingDb = Get.find<FollowerFollowingDb>();
+  FollowerFollowingDb followerFollowingDb = Get.find<FollowerFollowingDb>();
 
   RxList finalPosts = [].obs;
 
   collectFinalPostList() {
-    print('${postService.followingList.length} following list');
+    followerFollowingDb.followingList.forEach((element) {
+      print(element);
+    });
   }
 
   @override
   void onInit() {
-    postService.getListOfUserFollowing();
-    // collectFinalPostList();
+    followerFollowingDb.getListOfUserFollowing();
+    collectFinalPostList();
     super.onInit();
 
     userDb.fetchAllUserDetails();

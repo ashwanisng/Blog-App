@@ -10,7 +10,7 @@ class PostService extends GetxController {
 
   CollectionReference postRef = FirebaseFirestore.instance.collection('posts');
 
-  // FollowerFollowingDb followerFollowingDb = Get.find<FollowerFollowingDb>();
+  FollowerFollowingDb followerFollowingDb = Get.find<FollowerFollowingDb>();
 
   var isUploading = false.obs;
 
@@ -102,27 +102,9 @@ class PostService extends GetxController {
     }
   }
 
-  List followingList = [];
-
-  Future<void> getListOfUserFollowing() async {
-    FirebaseAuth _auth = FirebaseAuth.instance;
-
-    try {
-      var snapshot = await FirebaseFirestore.instance
-          .collection("following")
-          .doc(_auth.currentUser!.uid)
-          .collection("userFollowing")
-          .get();
-
-      followingList = snapshot.docs.map((e) => (e.data())).toList();
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
   getUserPosts() async {
     try {
-      for (var i = 0; i < followingList.length; i++) {
+      for (var i = 0; i < followerFollowingDb.followingList.length; i++) {
         // var snapshot = await FirebaseFirestore.instance
         //     .collection('posts')
         //     .doc(followingList[i])
@@ -130,7 +112,7 @@ class PostService extends GetxController {
         //     .orderBy('createdAt', descending: true)
         //     .get();
 
-        print(followingList[i]);
+        print(followerFollowingDb.followingList[i]);
 
         // postList += snapshot.docs.map((e) => (e.data())).toList();
       }

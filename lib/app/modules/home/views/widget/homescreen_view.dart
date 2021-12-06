@@ -26,25 +26,133 @@ class HomeScreenView extends GetView<HomeController> {
         ),
       ),
       backgroundColor: Env.colors.background,
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection("posts")
-            .doc(controller.userDb.auth.currentUser!.uid)
-            .collection("userPosts")
-            .orderBy("createdAt", descending: true)
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
+      body: Obx(
+        () => ListView.builder(
+          itemCount: controller.followerFollowingDb.postCollection.length,
+          itemBuilder: (BuildContext context, int index) {
+            // final DocumentSnapshot doc = snapshot.data!.docs[index];
+
+            var data = controller.followerFollowingDb.postCollection[index];
+
+            print(data['title']);
+            DateTime time =
+                (DateTime.parse(data["createdAt"].toDate().toString()));
+
+            return SizedBox(
+              height: MediaQuery.of(context).size.height / 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Obx(
+                    () => controller.userDb.userData.isEmpty
+                        ? const Header(
+                            username: "@username",
+                            name: "Name",
+                            image:
+                                'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80',
+                            time: "few day ago",
+                          )
+                        : Expanded(
+                            child: Header(
+                              username: data['userNameOfUser'],
+                              name: data['nameOfUser'],
+                              image: data['imageUrlOfUser'],
+                              time: timeago.format(time),
+                            ),
+                          ),
+                  ),
+                  Expanded(child: TopicName(topicName: data["title"])),
+                  const SizedBox(height: 5),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => const PostView(), arguments: {
+                        "title": data["title"],
+                        "content": data["content"],
+                        "createdAt": data["createdAt"],
+                      });
+                    },
+                    child: Expanded(
+                      child: DescriptionText(
+                        description: data["description"],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  // const Divider(),
+                  Obx(
+                    () => Expanded(
+                      child: Footer(
+                        likes: data["likes"],
+                        likeIcon: controller.postService.isLiked.value
+                            ? Icon(
+                                Icons.thumb_up_alt_sharp,
+                                color: Env.colors.primaryBlue,
+                              )
+                            : const Icon(
+                                Icons.thumb_up_alt_sharp,
+                                color: Colors.grey,
+                              ),
+                        onLikeOnPressed: () {
+                          controller.postService.isLiked.value == true
+                              ? controller.postService.isLiked.value = false
+                              : controller.postService.isLiked.value = true;
+
+                          if (controller.postService.isLiked.value == true) {
+                            controller.postService.like();
+                          } else {
+                            controller.postService.decreaseLike();
+                          }
+                        },
+                        dislikes: data["dislikes"],
+                        dislikeIcon: controller.postService.isDisliked.value
+                            ? const Icon(
+                                Icons.thumb_down_sharp,
+                                color: Colors.red,
+                              )
+                            : const Icon(
+                                Icons.thumb_up_alt_sharp,
+                                color: Colors.grey,
+                              ),
+                        onDislikeOnPressed: () {
+                          controller.postService.isDisliked.value == true
+                              ? controller.postService.isDisliked.value = false
+                              : controller.postService.isDisliked.value = true;
+
+                          if (controller.postService.isDisliked.value == true) {
+                            controller.postService.disLikeCountIncrease();
+                          } else {
+                            controller.postService.decreaseDisLikeCount();
+                          }
+                        },
+                        comments: controller
+                            .followerFollowingDb.postCollection.length,
+                        onCommentOnPressed: () {
+                          // controller.commentOnPressed(doc);
+
+                          // for (var i = 0;
+                          //     i < controller.postService.followingList.length;
+                          //     i++) {
+                          //   print(controller.postService.followingList[i]);
+                          // }
+                        },
+                      ),
+                    ),
+                  ),
+                  const Divider()
+                ],
+              ),
             );
-          }
-          for (var i = 0;
-              i < controller.postService.followingList.length;
-              i++) {
-            print(controller.postService.followingList[i]);
-          }
-          return ListView.builder(
+          },
+        ),
+      ),
+    );
+  }
+}
+
+
+/**
+ * 
+ * ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (BuildContext context, int index) {
               final DocumentSnapshot doc = snapshot.data!.docs[index];
@@ -142,7 +250,8 @@ class HomeScreenView extends GetView<HomeController> {
                               controller.postService.decreaseDisLikeCount();
                             }
                           },
-                          comments: controller.postService.followingList.length,
+                          comments: controller
+                              .followerFollowingDb.postCollection.length,
                           onCommentOnPressed: () {
                             // controller.commentOnPressed(doc);
 
@@ -160,9 +269,5 @@ class HomeScreenView extends GetView<HomeController> {
                 ),
               );
             },
-          );
-        },
-      ),
-    );
-  }
-}
+          )
+ */
