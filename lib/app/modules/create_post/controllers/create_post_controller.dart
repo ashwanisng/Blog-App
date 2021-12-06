@@ -31,6 +31,9 @@ class CreatePostController extends GetxController {
         likes: 0,
         dislikes: 0,
         createdAt: DateTime.now(),
+        imageUrlOfUser: userDbController.userData[0]['photoUrl'],
+        userNameOfUser: userDbController.userData[0]['userName'],
+        nameOfUser: userDbController.userData[0]['name'],
       ),
     );
     titleController.clear();

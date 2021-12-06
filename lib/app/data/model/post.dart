@@ -10,6 +10,9 @@ class PostModel {
   final int dislikes;
   // final int comments;
   final DateTime createdAt;
+  final String imageUrlOfUser;
+  final String nameOfUser;
+  final String userNameOfUser;
 
   PostModel({
     required this.id,
@@ -21,6 +24,9 @@ class PostModel {
     required this.dislikes,
     // required this.comments,
     required this.createdAt,
+    required this.imageUrlOfUser,
+    required this.nameOfUser,
+    required this.userNameOfUser,
   });
 
   factory PostModel.fromDocument(DocumentSnapshot doc) {
@@ -34,6 +40,9 @@ class PostModel {
       dislikes: doc['dislikes'],
       // comments: doc['comments'],
       createdAt: doc['createdAt'],
+      imageUrlOfUser: doc['imageUrlOfUser'],
+      nameOfUser: doc['nameOfUser'],
+      userNameOfUser: doc['userNameOfUser'],
     );
   }
 
@@ -48,6 +57,9 @@ class PostModel {
       'dislikes': dislikes,
       // 'comments': comments,
       'createdAt': createdAt,
+      'imageUrlOfUser': imageUrlOfUser,
+      'nameOfUser': nameOfUser,
+      'userNameOfUser': userNameOfUser,
     };
   }
 }

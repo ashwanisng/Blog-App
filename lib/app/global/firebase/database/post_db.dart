@@ -1,5 +1,5 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
-import 'package:blog_app/app/modules/post/controllers/post_controller.dart';
+import 'package:blog_app/app/global/firebase/database/follower_following_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class PostService extends GetxController {
 
   CollectionReference postRef = FirebaseFirestore.instance.collection('posts');
 
-  List posts = [];
+  // FollowerFollowingDb followerFollowingDb = Get.find<FollowerFollowingDb>();
 
   var isUploading = false.obs;
 
@@ -23,9 +23,14 @@ class PostService extends GetxController {
   Rx<int> _likes = 0.obs;
   Rx<int> get likes => _likes;
 
+  List postList = [];
+
+  var postCollection = [].obs;
+
   void like() async {
     _likes.value++;
-    QuerySnapshot querySnapshot = await postRef.get();
+    QuerySnapshot querySnapshot =
+        await postRef.doc(auth.currentUser!.uid).collection("userPosts").get();
 
     for (var doc in querySnapshot.docs) {
       await doc.reference.update({
@@ -70,7 +75,10 @@ class PostService extends GetxController {
   Future<void> uploadUserPost(dynamic posts) async {
     try {
       isUploading.value = true;
-      await postRef.add(posts.toJson());
+      await postRef
+          .doc(auth.currentUser!.uid)
+          .collection("userPosts")
+          .add(posts.toJson());
 
       Get.snackbar(
         "Success!",
@@ -91,6 +99,47 @@ class PostService extends GetxController {
       );
     } finally {
       isUploading.value = false;
+    }
+  }
+
+  List followingList = [];
+
+  Future<void> getListOfUserFollowing() async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    try {
+      var snapshot = await FirebaseFirestore.instance
+          .collection("following")
+          .doc(_auth.currentUser!.uid)
+          .collection("userFollowing")
+          .get();
+
+      followingList = snapshot.docs.map((e) => (e.data())).toList();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  getUserPosts() async {
+    try {
+      for (var i = 0; i < followingList.length; i++) {
+        // var snapshot = await FirebaseFirestore.instance
+        //     .collection('posts')
+        //     .doc(followingList[i])
+        //     .collection("userPosts")
+        //     .orderBy('createdAt', descending: true)
+        //     .get();
+
+        print(followingList[i]);
+
+        // postList += snapshot.docs.map((e) => (e.data())).toList();
+      }
+
+      postCollection.value = postList;
+
+      // print('${followerFollowingDb.followingList.length} following list');
+    } catch (e) {
+      print(e);
     }
   }
 }

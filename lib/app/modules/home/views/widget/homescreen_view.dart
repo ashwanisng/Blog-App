@@ -29,8 +29,8 @@ class HomeScreenView extends GetView<HomeController> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("posts")
-            // .doc(controller.auth.currentUser!.uid)
-            // .collection("userPosts")
+            .doc(controller.userDb.auth.currentUser!.uid)
+            .collection("userPosts")
             .orderBy("createdAt", descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -38,6 +38,11 @@ class HomeScreenView extends GetView<HomeController> {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          }
+          for (var i = 0;
+              i < controller.postService.followingList.length;
+              i++) {
+            print(controller.postService.followingList[i]);
           }
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
@@ -47,7 +52,7 @@ class HomeScreenView extends GetView<HomeController> {
                   (DateTime.parse(doc["createdAt"].toDate().toString()));
 
               return SizedBox(
-                height: MediaQuery.of(context).size.height / 2.3,
+                height: MediaQuery.of(context).size.height / 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -60,15 +65,18 @@ class HomeScreenView extends GetView<HomeController> {
                                   'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80',
                               time: "few day ago",
                             )
-                          : Header(
-                              username: controller.userDb.userData[0]
-                                  ['userName'],
-                              name: controller.userDb.userData[0]['name'],
-                              image: controller.userDb.userData[0]['photoUrl'],
-                              time: timeago.format(time),
+                          : Expanded(
+                              child: Header(
+                                username: controller.userDb.userData[0]
+                                    ['userName'],
+                                name: controller.userDb.userData[0]['name'],
+                                image: controller.userDb.userData[0]
+                                    ['photoUrl'],
+                                time: timeago.format(time),
+                              ),
                             ),
                     ),
-                    TopicName(topicName: doc["title"]),
+                    Expanded(child: TopicName(topicName: doc["title"])),
                     const SizedBox(height: 5),
                     GestureDetector(
                       onTap: () {
@@ -78,60 +86,73 @@ class HomeScreenView extends GetView<HomeController> {
                           "createdAt": doc["createdAt"],
                         });
                       },
-                      child: DescriptionText(
-                        description: doc["description"],
+                      child: Expanded(
+                        child: DescriptionText(
+                          description: doc["description"],
+                        ),
                       ),
                     ),
                     const SizedBox(height: 5),
                     // const Divider(),
                     Obx(
-                      () => Footer(
-                        likes: doc["likes"],
-                        likeIcon: controller.postService.isLiked.value
-                            ? Icon(
-                                Icons.thumb_up_alt_sharp,
-                                color: Env.colors.primaryBlue,
-                              )
-                            : const Icon(
-                                Icons.thumb_up_alt_sharp,
-                                color: Colors.grey,
-                              ),
-                        onLikeOnPressed: () {
-                          controller.postService.isLiked.value == true
-                              ? controller.postService.isLiked.value = false
-                              : controller.postService.isLiked.value = true;
+                      () => Expanded(
+                        child: Footer(
+                          likes: doc["likes"],
+                          likeIcon: controller.postService.isLiked.value
+                              ? Icon(
+                                  Icons.thumb_up_alt_sharp,
+                                  color: Env.colors.primaryBlue,
+                                )
+                              : const Icon(
+                                  Icons.thumb_up_alt_sharp,
+                                  color: Colors.grey,
+                                ),
+                          onLikeOnPressed: () {
+                            controller.postService.isLiked.value == true
+                                ? controller.postService.isLiked.value = false
+                                : controller.postService.isLiked.value = true;
 
-                          if (controller.postService.isLiked.value == true) {
-                            controller.postService.like();
-                          } else {
-                            controller.postService.decreaseLike();
-                          }
-                        },
-                        dislikes: doc["dislikes"],
-                        dislikeIcon: controller.postService.isDisliked.value
-                            ? const Icon(
-                                Icons.thumb_down_sharp,
-                                color: Colors.red,
-                              )
-                            : const Icon(
-                                Icons.thumb_up_alt_sharp,
-                                color: Colors.grey,
-                              ),
-                        onDislikeOnPressed: () {
-                          controller.postService.isDisliked.value == true
-                              ? controller.postService.isDisliked.value = false
-                              : controller.postService.isDisliked.value = true;
+                            if (controller.postService.isLiked.value == true) {
+                              controller.postService.like();
+                            } else {
+                              controller.postService.decreaseLike();
+                            }
+                          },
+                          dislikes: doc["dislikes"],
+                          dislikeIcon: controller.postService.isDisliked.value
+                              ? const Icon(
+                                  Icons.thumb_down_sharp,
+                                  color: Colors.red,
+                                )
+                              : const Icon(
+                                  Icons.thumb_up_alt_sharp,
+                                  color: Colors.grey,
+                                ),
+                          onDislikeOnPressed: () {
+                            controller.postService.isDisliked.value == true
+                                ? controller.postService.isDisliked.value =
+                                    false
+                                : controller.postService.isDisliked.value =
+                                    true;
 
-                          if (controller.postService.isDisliked.value == true) {
-                            controller.postService.disLikeCountIncrease();
-                          } else {
-                            controller.postService.decreaseDisLikeCount();
-                          }
-                        },
-                        comments: 0,
-                        onCommentOnPressed: () {
-                          // controller.commentOnPressed(doc);
-                        },
+                            if (controller.postService.isDisliked.value ==
+                                true) {
+                              controller.postService.disLikeCountIncrease();
+                            } else {
+                              controller.postService.decreaseDisLikeCount();
+                            }
+                          },
+                          comments: controller.postService.followingList.length,
+                          onCommentOnPressed: () {
+                            // controller.commentOnPressed(doc);
+
+                            // for (var i = 0;
+                            //     i < controller.postService.followingList.length;
+                            //     i++) {
+                            //   print(controller.postService.followingList[i]);
+                            // }
+                          },
+                        ),
                       ),
                     ),
                     const Divider()

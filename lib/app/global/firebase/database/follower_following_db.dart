@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class FollowerFollowingDb extends GetxController {
@@ -18,7 +19,7 @@ class FollowerFollowingDb extends GetxController {
         .doc(currentUserId)
         .collection('userFollowing')
         .doc(followingId)
-        .set({'id': followingId});
+        .set({});
   }
 
   Future<void> addFollower({
@@ -29,7 +30,7 @@ class FollowerFollowingDb extends GetxController {
         .doc(currentUserId)
         .collection('userFollowers')
         .doc(followerId)
-        .set({'id': followerId});
+        .set({});
   }
 
   Future<void> removeFollowing({

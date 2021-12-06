@@ -17,6 +17,8 @@ class TopicName extends StatelessWidget {
         child: Text(
           topicName!,
           style: Env.textStyles.descriptionText,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );
