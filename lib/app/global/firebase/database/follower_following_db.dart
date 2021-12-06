@@ -28,6 +28,7 @@ class FollowerFollowingDb extends GetxController {
           .get();
 
       followingList = snapshot.docs.map((doc) => doc.id).toList();
+      followingList.add(_auth.currentUser!.uid);
 
       for (var i = 0; i < followingList.length; i++) {
         var snapshot = await FirebaseFirestore.instance
