@@ -21,6 +21,8 @@ class FollowerFollowingDb extends GetxController {
     FirebaseAuth _auth = FirebaseAuth.instance;
 
     try {
+      followingList.clear();
+      postCollection.clear();
       var snapshot = await FirebaseFirestore.instance
           .collection("following")
           .doc(_auth.currentUser!.uid)
