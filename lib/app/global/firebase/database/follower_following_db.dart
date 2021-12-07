@@ -17,6 +17,20 @@ class FollowerFollowingDb extends GetxController {
 
   var postCollection = [].obs;
 
+  Future<void> checkIfFollowing(String userId) async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection('followers')
+        .doc(userId)
+        .collection("userFollowers")
+        .doc(_auth.currentUser!.uid)
+        .get();
+
+    isFollowing.value = snapshot.exists;
+    print(snapshot.exists);
+  }
+
   Future<void> getListOfUserFollowing() async {
     FirebaseAuth _auth = FirebaseAuth.instance;
 
