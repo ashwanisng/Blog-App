@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:blog_app/app/core/enviroment/env.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,6 +38,24 @@ class UserDbController extends GetxController {
       );
     }
   }
+
+  // Future<void> updateFollowingList(
+  //     {required bool isFollowing, required String userId}) async {
+  //   try {
+  //     var snapshot = await userCollection.get();
+  //     snapshot.docs.forEach((element) {
+  //       element.data()!['following'].forEach((element) {
+  //         if (element == userId) {
+  //           userCollection.doc(element.toString()).update({
+  //             'following': FieldValue.arrayRemove([userId])
+  //           });
+  //         }
+  //       });
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   Future<void> fetchAllUserDetails() async {
     FirebaseAuth _auth = FirebaseAuth.instance;
