@@ -5,8 +5,6 @@ import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:get/get.dart';
 
 class ViewUserController extends GetxController {
-  //TODO: Implement ExploreController
-
   String? bio;
   String? name;
   String? image;

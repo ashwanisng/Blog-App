@@ -23,7 +23,6 @@ class ViewUser extends GetView<ViewUserController> {
             height: MediaQuery.of(context).size.height * 0.2,
             width: MediaQuery.of(context).size.width,
             child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
                   flex: 4,
@@ -156,14 +155,6 @@ class ViewUser extends GetView<ViewUserController> {
                                 followerId: controller
                                     .userDbController.auth.currentUser!.uid,
                               );
-                              print(controller
-                                  .followerFollowingDb.isFollowing.value);
-                              print(controller.uid);
-
-                              // controller.userDbController.updateFollowingList(
-                              //   isFollowing: true,
-                              //   userId: controller.uid!,
-                              // );
                             } else {
                               controller.followerFollowingDb.removeFollowing(
                                 currentUserId: controller
@@ -176,9 +167,6 @@ class ViewUser extends GetView<ViewUserController> {
                                 followerId: controller
                                     .userDbController.auth.currentUser!.uid,
                               );
-
-                              // controller.userDbController.updateFollowingList(
-                              //     isFollowing: false, userId: controller.uid!);
                             }
                           },
                           child:

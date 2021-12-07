@@ -17,7 +17,7 @@ class PostService extends GetxController {
   var isLiked = false.obs;
 
   var isDisliked = false.obs;
-  Rx<int> _dislikeCount = 0.obs;
+  var _dislikeCount = 0.obs;
   Rx<int> get dislikeCount => _dislikeCount;
 
   Rx<int> _likes = 0.obs;
@@ -99,29 +99,6 @@ class PostService extends GetxController {
       );
     } finally {
       isUploading.value = false;
-    }
-  }
-
-  getUserPosts() async {
-    try {
-      for (var i = 0; i < followerFollowingDb.followingList.length; i++) {
-        // var snapshot = await FirebaseFirestore.instance
-        //     .collection('posts')
-        //     .doc(followingList[i])
-        //     .collection("userPosts")
-        //     .orderBy('createdAt', descending: true)
-        //     .get();
-
-        print(followerFollowingDb.followingList[i]);
-
-        // postList += snapshot.docs.map((e) => (e.data())).toList();
-      }
-
-      postCollection.value = postList;
-
-      // print('${followerFollowingDb.followingList.length} following list');
-    } catch (e) {
-      print(e);
     }
   }
 }

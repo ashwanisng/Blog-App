@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,11 +32,8 @@ class HomeScreenView extends GetView<HomeController> {
           child: ListView.builder(
             itemCount: controller.followerFollowingDb.postCollection.length,
             itemBuilder: (BuildContext context, int index) {
-              // final DocumentSnapshot doc = snapshot.data!.docs[index];
-
               var data = controller.followerFollowingDb.postCollection[index];
 
-              print(data['title']);
               DateTime time =
                   (DateTime.parse(data["createdAt"].toDate().toString()));
 
