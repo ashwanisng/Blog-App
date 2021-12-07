@@ -93,10 +93,14 @@ class ViewUser extends GetView<ViewUserController> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(
-                                  "0",
-                                  style: Env.textStyles.title.copyWith(
-                                    fontWeight: FontWeight.w600,
+                                Obx(
+                                  () => Text(
+                                    controller.followerFollowingDb
+                                        .followerCountOfViwedUser.value
+                                        .toString(),
+                                    style: Env.textStyles.title.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                                 const Text(
@@ -110,10 +114,14 @@ class ViewUser extends GetView<ViewUserController> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(
-                                  "0",
-                                  style: Env.textStyles.title.copyWith(
-                                    fontWeight: FontWeight.w600,
+                                Obx(
+                                  () => Text(
+                                    controller.followerFollowingDb
+                                        .followingCountOfViwedUser.value
+                                        .toString(),
+                                    style: Env.textStyles.title.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                                 const Text(

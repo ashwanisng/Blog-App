@@ -62,6 +62,12 @@ class ExploreView extends GetView<ExploreController> {
 
                   controller.followerFollowingDb.checkIfFollowing(
                       controller.userDbController.searchResultList[0]["uid"]);
+
+                  controller.followerFollowingDb.getFollowersCountOfViewedUser(
+                      controller.userDbController.searchResultList[0]["uid"]);
+
+                  controller.followerFollowingDb.getFollowingCountOfViwedUser(
+                      controller.userDbController.searchResultList[0]["uid"]);
                 },
                 child: SearchResult(
                   userUserName: controller.userDbController.searchResultList[0]

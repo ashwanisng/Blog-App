@@ -15,7 +15,38 @@ class FollowerFollowingDb extends GetxController {
 
   var postList = [];
 
+  RxInt followerCountOfViwedUser = 0.obs;
+  RxInt followingCountOfViwedUser = 0.obs;
+
   var postCollection = [].obs;
+
+  Future<void> getFollowingCountOfViwedUser(String userId) async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('following')
+          .doc(userId)
+          .collection("userFollowing")
+          .get();
+
+      followingCountOfViwedUser.value = querySnapshot.docs.length;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> getFollowersCountOfViewedUser(String userId) async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('followers')
+          .doc(userId)
+          .collection("userFollowers")
+          .get();
+
+      followerCountOfViwedUser.value = querySnapshot.docs.length;
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future<void> checkIfFollowing(String userId) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
