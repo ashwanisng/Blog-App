@@ -27,6 +27,18 @@ class PostService extends GetxController {
 
   var postCollection = [].obs;
 
+  var userPostCount = 0.obs;
+
+  Future<void> getUserPostCount(String userId) async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(userId)
+        .collection('userPosts')
+        .get();
+
+    userPostCount.value = querySnapshot.docs.length;
+  }
+
   void like() async {
     _likes.value++;
     QuerySnapshot querySnapshot =

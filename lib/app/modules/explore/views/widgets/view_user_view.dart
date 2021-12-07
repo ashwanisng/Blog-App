@@ -75,10 +75,13 @@ class ViewUser extends GetView<ViewUserController> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(
-                                  "0",
-                                  style: Env.textStyles.title.copyWith(
-                                    fontWeight: FontWeight.w600,
+                                Obx(
+                                  () => Text(
+                                    controller.postService.userPostCount.value
+                                        .toString(),
+                                    style: Env.textStyles.title.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                                 const Text(

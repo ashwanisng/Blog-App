@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_overrides
 
 import 'package:blog_app/app/global/firebase/database/follower_following_db.dart';
+import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,8 @@ class ExploreController extends GetxController {
   UserDbController userDbController = Get.find<UserDbController>();
 
   FollowerFollowingDb followerFollowingDb = Get.find<FollowerFollowingDb>();
+
+  PostService postService = Get.find<PostService>();
 
   @override
   void onInit() {
