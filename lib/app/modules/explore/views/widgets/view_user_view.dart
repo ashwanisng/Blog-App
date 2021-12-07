@@ -148,6 +148,14 @@ class ViewUser extends GetView<ViewUserController> {
                                 followerId: controller
                                     .userDbController.auth.currentUser!.uid,
                               );
+                              print(controller
+                                  .followerFollowingDb.isFollowing.value);
+                              print(controller.uid);
+
+                              // controller.userDbController.updateFollowingList(
+                              //   isFollowing: true,
+                              //   userId: controller.uid!,
+                              // );
                             } else {
                               controller.followerFollowingDb.removeFollowing(
                                 currentUserId: controller
@@ -160,6 +168,9 @@ class ViewUser extends GetView<ViewUserController> {
                                 followerId: controller
                                     .userDbController.auth.currentUser!.uid,
                               );
+
+                              // controller.userDbController.updateFollowingList(
+                              //     isFollowing: false, userId: controller.uid!);
                             }
                           },
                           child:

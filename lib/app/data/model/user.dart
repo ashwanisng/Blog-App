@@ -8,6 +8,7 @@ class UserModel {
   final String userName;
   final String bio;
   final String location;
+  final bool? isFollowing;
 
   UserModel({
     required this.uid,
@@ -17,6 +18,7 @@ class UserModel {
     required this.userName,
     required this.bio,
     required this.location,
+    required this.isFollowing,
   });
 
   factory UserModel.fromDocument(DocumentSnapshot doc) {
@@ -28,6 +30,7 @@ class UserModel {
       userName: doc['userName'],
       bio: doc['bio'],
       location: doc['location'],
+      isFollowing: doc['isFollowing'],
     );
   }
 
@@ -40,6 +43,7 @@ class UserModel {
       'userName': userName,
       'bio': bio,
       'location': location,
+      'isFollowing': isFollowing,
     };
   }
 }

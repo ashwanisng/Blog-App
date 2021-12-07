@@ -64,9 +64,7 @@ class CreatePostView extends GetView<CreatePostController> {
                                   .toString()
                                   .isEmpty
                               ? "@username"
-                              : controller
-                                  .userDbController.userData[0]['userName']
-                                  .toString(),
+                              : '@${controller.userDbController.userData[0]['userName']}',
                         ),
             ),
             const SizedBox(

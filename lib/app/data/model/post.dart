@@ -13,6 +13,7 @@ class PostModel {
   final String imageUrlOfUser;
   final String nameOfUser;
   final String userNameOfUser;
+  final String userLocationOfUser;
 
   PostModel({
     required this.id,
@@ -27,6 +28,7 @@ class PostModel {
     required this.imageUrlOfUser,
     required this.nameOfUser,
     required this.userNameOfUser,
+    required this.userLocationOfUser,
   });
 
   factory PostModel.fromDocument(DocumentSnapshot doc) {
@@ -43,6 +45,7 @@ class PostModel {
       imageUrlOfUser: doc['imageUrlOfUser'],
       nameOfUser: doc['nameOfUser'],
       userNameOfUser: doc['userNameOfUser'],
+      userLocationOfUser: doc['userLocationOfUser'],
     );
   }
 
@@ -60,6 +63,7 @@ class PostModel {
       'imageUrlOfUser': imageUrlOfUser,
       'nameOfUser': nameOfUser,
       'userNameOfUser': userNameOfUser,
+      'userLocationOfUser': userLocationOfUser,
     };
   }
 }

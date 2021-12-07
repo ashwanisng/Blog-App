@@ -30,14 +30,14 @@ class EditProfileController extends GetxController {
 
   uploadUserDetails() {
     userDb.uploadUserData(UserModel(
-      uid: auth.currentUser!.uid,
-      name: nameController.text.trim(),
-      email: emailController.text.trim(),
-      photoUrl: downloadUrl,
-      userName: usernameController.text.trim(),
-      bio: bioController.text.trim(),
-      location: locationController.text.trim(),
-    ));
+        uid: auth.currentUser!.uid,
+        name: nameController.text.trim(),
+        email: emailController.text.trim(),
+        photoUrl: downloadUrl,
+        userName: usernameController.text.trim(),
+        bio: bioController.text.trim(),
+        location: locationController.text.trim(),
+        isFollowing: false));
   }
 
   Future selectProfileImage(ImageSource imageSource) async {

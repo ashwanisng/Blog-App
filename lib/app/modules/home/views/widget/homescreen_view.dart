@@ -47,22 +47,23 @@ class HomeScreenView extends GetView<HomeController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Obx(
-                      () => controller.userDb.userData.isEmpty
-                          ? const Header(
-                              username: "@username",
-                              name: "Name",
-                              image:
-                                  'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80',
-                              time: "few day ago",
-                            )
-                          : Expanded(
-                              child: Header(
-                                username: data['userNameOfUser'],
-                                name: data['nameOfUser'],
-                                image: data['imageUrlOfUser'],
-                                time: timeago.format(time),
-                              ),
-                            ),
+                      () =>
+                          controller.followerFollowingDb.postCollection.isEmpty
+                              ? const Header(
+                                  username: "@username",
+                                  name: "Name",
+                                  image:
+                                      'https://images.unsplash.com/photo-1637181871441-3fd29405bba4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1947&q=80',
+                                  time: "few day ago",
+                                )
+                              : Expanded(
+                                  child: Header(
+                                    username: '@${data['userNameOfUser']}',
+                                    name: data['nameOfUser'],
+                                    image: data['imageUrlOfUser'],
+                                    time: timeago.format(time),
+                                  ),
+                                ),
                     ),
                     Expanded(child: TopicName(topicName: data["title"])),
                     const SizedBox(height: 5),

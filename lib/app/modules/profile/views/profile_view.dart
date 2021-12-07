@@ -108,9 +108,7 @@ class ProfileView extends GetView<ProfileController> {
                                               .toString()
                                               .isEmpty
                                           ? '@userName'
-                                          : controller.userDbController
-                                              .userData[0]['userName']
-                                              .toString(),
+                                          : '@${controller.userDbController.userData[0]['userName']}',
                                       style: Env.textStyles.labelText,
                                     ),
                                   ],

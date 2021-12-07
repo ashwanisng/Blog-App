@@ -34,6 +34,7 @@ class CreatePostController extends GetxController {
         imageUrlOfUser: userDbController.userData[0]['photoUrl'],
         userNameOfUser: userDbController.userData[0]['userName'],
         nameOfUser: userDbController.userData[0]['name'],
+        userLocationOfUser: userDbController.userData[0]['location'],
       ),
     );
     titleController.clear();
