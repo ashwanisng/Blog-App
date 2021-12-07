@@ -59,7 +59,6 @@ class FollowerFollowingDb extends GetxController {
         .get();
 
     isFollowing.value = snapshot.exists;
-    print(snapshot.exists);
   }
 
   Future<void> getListOfUserFollowing() async {
