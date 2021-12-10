@@ -1,5 +1,5 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
-import 'package:blog_app/app/modules/explore/views/components/no_search.dart';
+import 'package:blog_app/app/utils/no_search_result.dart';
 import 'package:blog_app/app/modules/explore/views/components/search_result.dart';
 import 'package:blog_app/app/modules/explore/views/widgets/view_user_view.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +41,7 @@ class ExploreView extends GetView<ExploreController> {
       ),
       body: Obx(
         () => controller.userDbController.searchResultList.isEmpty
-            ? const Center(child: NoSearchFound())
+            ? const Center(child: NoSearchResult())
             : GestureDetector(
                 onTap: () {
                   Get.to(
