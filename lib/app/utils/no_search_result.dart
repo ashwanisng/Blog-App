@@ -1,4 +1,3 @@
-import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:flutter/material.dart';
 
 class NoSearchResult extends StatelessWidget {

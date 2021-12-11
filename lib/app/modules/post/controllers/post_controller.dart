@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_overrides
 
+import 'package:blog_app/app/data/service/network_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
@@ -7,6 +8,8 @@ class PostController extends GetxController {
   String? title;
   String? body;
   DateTime? date;
+
+  NetworkController networkController = Get.find<NetworkController>();
 
   @override
   void onInit() {

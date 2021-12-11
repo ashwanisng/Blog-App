@@ -1,4 +1,5 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
+import 'package:blog_app/app/utils/no_internet.dart';
 import 'package:blog_app/app/utils/no_search_result.dart';
 import 'package:blog_app/app/modules/explore/views/components/search_result.dart';
 import 'package:blog_app/app/modules/explore/views/widgets/view_user_view.dart';
@@ -40,47 +41,53 @@ class ExploreView extends GetView<ExploreController> {
         ),
       ),
       body: Obx(
-        () => controller.userDbController.searchResultList.isEmpty
-            ? const Center(child: NoSearchResult())
-            : GestureDetector(
-                onTap: () {
-                  Get.to(
-                    () => const ViewUser(),
-                    arguments: {
-                      'name': controller.userDbController.searchResultList[0]
-                          ["name"],
-                      'userName': controller
-                          .userDbController.searchResultList[0]["userName"],
-                      'image': controller.userDbController.searchResultList[0]
-                          ["photoUrl"],
-                      "bio": controller.userDbController.searchResultList[0]
-                          ["bio"],
-                      "uid": controller.userDbController.searchResultList[0]
-                          ["uid"],
+        () => controller.networkController.isInternetConnected.isTrue
+            ? controller.userDbController.searchResultList.isEmpty
+                ? const Center(
+                    child: NoSearchResult(),
+                  )
+                : GestureDetector(
+                    onTap: () {
+                      Get.to(
+                        () => const ViewUser(),
+                        arguments: {
+                          'name': controller
+                              .userDbController.searchResultList[0]["name"],
+                          'userName': controller
+                              .userDbController.searchResultList[0]["userName"],
+                          'image': controller
+                              .userDbController.searchResultList[0]["photoUrl"],
+                          "bio": controller.userDbController.searchResultList[0]
+                              ["bio"],
+                          "uid": controller.userDbController.searchResultList[0]
+                              ["uid"],
+                        },
+                      );
+
+                      controller.followerFollowingDb.checkIfFollowing(controller
+                          .userDbController.searchResultList[0]["uid"]);
+
+                      controller.followerFollowingDb
+                          .getFollowersCountOfViewedUser(controller
+                              .userDbController.searchResultList[0]["uid"]);
+
+                      controller.followerFollowingDb
+                          .getFollowingCountOfViwedUser(controller
+                              .userDbController.searchResultList[0]["uid"]);
+
+                      controller.postService.getUserPostCount(controller
+                          .userDbController.searchResultList[0]["uid"]);
                     },
-                  );
-
-                  controller.followerFollowingDb.checkIfFollowing(
-                      controller.userDbController.searchResultList[0]["uid"]);
-
-                  controller.followerFollowingDb.getFollowersCountOfViewedUser(
-                      controller.userDbController.searchResultList[0]["uid"]);
-
-                  controller.followerFollowingDb.getFollowingCountOfViwedUser(
-                      controller.userDbController.searchResultList[0]["uid"]);
-
-                  controller.postService.getUserPostCount(
-                      controller.userDbController.searchResultList[0]["uid"]);
-                },
-                child: SearchResult(
-                  userUserName: controller.userDbController.searchResultList[0]
-                      ["userName"],
-                  userImageUrl: controller.userDbController.searchResultList[0]
-                      ["photoUrl"],
-                  userName: controller.userDbController.searchResultList[0]
-                      ["name"],
-                ),
-              ),
+                    child: SearchResult(
+                      userUserName: controller
+                          .userDbController.searchResultList[0]["userName"],
+                      userImageUrl: controller
+                          .userDbController.searchResultList[0]["photoUrl"],
+                      userName: controller.userDbController.searchResultList[0]
+                          ["name"],
+                    ),
+                  )
+            : const NoInternet(),
       ),
     );
   }

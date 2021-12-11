@@ -1,3 +1,4 @@
+import 'package:blog_app/app/utils/no_internet.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -14,11 +15,12 @@ class NotificationView extends GetView<NotificationController> {
         title: const Text('NotificationView'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'NotificationView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: Obx(
+        () => controller.networkController.isInternetConnected.isTrue
+            ? const Center(
+                child: Text("Notification page"),
+              )
+            : const NoInternet(),
       ),
     );
   }

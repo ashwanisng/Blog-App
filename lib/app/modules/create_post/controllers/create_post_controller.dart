@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_overrides
 
 import 'package:blog_app/app/data/model/post.dart';
+import 'package:blog_app/app/data/service/network_controller.dart';
 import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +20,7 @@ class CreatePostController extends GetxController {
   Uuid uuid = const Uuid();
 
   UserDbController userDbController = Get.find<UserDbController>();
+  NetworkController networkController = Get.find<NetworkController>();
 
   void createPost() {
     postService.uploadUserPost(
