@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/home/controllers/home_controller.dart';
 import 'package:blog_app/app/modules/home/views/components/description_text.dart';
-import 'package:blog_app/app/modules/home/views/components/footer.dart';
+import 'package:blog_app/app/utils/footer.dart';
 import 'package:blog_app/app/modules/home/views/components/header.dart';
 import 'package:blog_app/app/modules/home/views/components/topic_name.dart';
 import 'package:blog_app/app/modules/post/views/post_view.dart';
@@ -85,6 +85,12 @@ class HomeScreenView extends GetView<HomeController> {
                                 "title": data["title"],
                                 "content": data["content"],
                                 "createdAt": data["createdAt"],
+                                "postId": data["id"],
+                                "imageUrl": controller.userDb.userData[0]
+                                    ["photoUrl"],
+                                "userName": controller.userDb.userData[0]
+                                    ["userName"],
+                                "userId": controller.userDb.userData[0]["uid"],
                               });
                             },
                             child: Expanded(

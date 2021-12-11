@@ -1,5 +1,6 @@
 import 'package:blog_app/app/data/service/network_controller.dart';
 import 'package:blog_app/app/global/firebase/auth/auth.dart';
+import 'package:blog_app/app/global/firebase/database/comment_db_controller.dart';
 import 'package:blog_app/app/global/firebase/database/follower_following_db.dart';
 import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
@@ -89,6 +90,11 @@ class GlobalBinding extends Bindings {
 
     Get.lazyPut<NetworkController>(
       () => NetworkController(),
+      fenix: true,
+    );
+
+    Get.lazyPut<CommentDbController>(
+      () => CommentDbController(),
       fenix: true,
     );
   }

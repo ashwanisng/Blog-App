@@ -1,4 +1,5 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
+import 'package:blog_app/app/utils/footer.dart';
 import 'package:blog_app/app/utils/no_internet.dart';
 import 'package:flutter/material.dart';
 
@@ -63,6 +64,39 @@ class PostView extends GetView<PostController> {
                             controller.body!,
                             style: Env.textStyles.smallText,
                           ),
+                        ),
+                      ),
+                      Divider(),
+                      Footer(
+                        likes: 142,
+                        dislikes: 142,
+                        comments: 5,
+                        onLikeOnPressed: () {},
+                        onDislikeOnPressed: () {},
+                        onCommentOnPressed: () {},
+                        likeIcon: const Icon(Icons.thumb_up),
+                        dislikeIcon: const Icon(Icons.thumb_down),
+                      ),
+                      const Divider(),
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            controller.userImageUrl!,
+                          ),
+                        ),
+                        title: TextFormField(
+                          controller: controller.commentController,
+                          decoration: const InputDecoration(
+                            hintText: 'Comente here...',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.send,
+                            color: Env.colors.primaryGreen,
+                          ),
+                          onPressed: () => controller.uploadComment(),
                         ),
                       )
                     ],
