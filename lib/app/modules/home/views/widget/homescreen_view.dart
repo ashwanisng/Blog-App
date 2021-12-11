@@ -9,6 +9,7 @@ import 'package:blog_app/app/modules/home/views/components/footer.dart';
 import 'package:blog_app/app/modules/home/views/components/header.dart';
 import 'package:blog_app/app/modules/home/views/components/topic_name.dart';
 import 'package:blog_app/app/modules/post/views/post_view.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class HomeScreenView extends GetView<HomeController> {
@@ -26,6 +27,17 @@ class HomeScreenView extends GetView<HomeController> {
         ),
       ),
       backgroundColor: Env.colors.background,
+      persistentFooterButtons: [
+        controller.isBottomBannerAdLoaded.value
+            ? SizedBox(
+                height: controller.bottomBannerAd.size.height.toDouble(),
+                width: controller.bottomBannerAd.size.width.toDouble(),
+                child: AdWidget(
+                  ad: controller.bottomBannerAd,
+                ),
+              )
+            : Container(),
+      ],
       body: Obx(
         () => controller.networkController.isInternetConnected.isTrue
             ? RefreshIndicator(
