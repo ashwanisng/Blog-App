@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class CommentDbController extends GetxController {
-  CollectionReference followingRef =
+  CollectionReference commetsRef =
       FirebaseFirestore.instance.collection('comments');
 
   Future<void> addComment({
@@ -13,7 +13,7 @@ class CommentDbController extends GetxController {
     required String userImageUrl,
     required DateTime dateTime,
   }) async {
-    await followingRef.doc(postId).collection('comments').add({
+    await commetsRef.doc(postId).collection('comments').add({
       'comment': comment,
       'userId': userId,
       'postId': postId,

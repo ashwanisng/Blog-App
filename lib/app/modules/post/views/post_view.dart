@@ -1,7 +1,11 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
+import 'package:blog_app/app/modules/post/views/widgets/comments.dart';
 import 'package:blog_app/app/utils/footer.dart';
 import 'package:blog_app/app/utils/no_internet.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:get/get.dart';
 
@@ -78,6 +82,46 @@ class PostView extends GetView<PostController> {
                         dislikeIcon: const Icon(Icons.thumb_down),
                       ),
                       const Divider(),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('comments')
+                            .doc(controller.postId!)
+                            .collection('comments')
+                            .orderBy("timestamp", descending: false)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          print(snapshot.data!.docs.length);
+                          print(controller.postId!);
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              var data = snapshot.data!.docs[index];
+                              return ListTile(
+                                leading: CircleAvatar(
+                                  backgroundImage: CachedNetworkImageProvider(
+                                    data['userImageUrl'],
+                                  ),
+                                ),
+                                title: Text(data['userName']),
+                                subtitle: Text(data['comment']),
+                                trailing: Text(
+                                  timeago.format(data['timestamp'].toDate()),
+                                  style: Env.textStyles.labelText
+                                      .copyWith(color: Colors.grey),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                       ListTile(
                         leading: CircleAvatar(
                           backgroundImage: NetworkImage(
