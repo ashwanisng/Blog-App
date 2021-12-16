@@ -51,6 +51,12 @@ class TextStyles {
     height: 1.5,
   );
 
+  final TextStyle commentUserNameStyle = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    fontFamily: "Roboto",
+  );
+
   final TextStyle descriptiveItem = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w700,

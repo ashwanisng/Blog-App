@@ -2,6 +2,7 @@
 
 import 'package:blog_app/app/data/service/ad_helper.dart';
 import 'package:blog_app/app/data/service/network_controller.dart';
+import 'package:blog_app/app/global/firebase/database/comment_db_controller.dart';
 import 'package:blog_app/app/global/firebase/database/follower_following_db.dart';
 import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
@@ -19,6 +20,8 @@ class HomeController extends GetxController {
   FollowerFollowingDb followerFollowingDb = Get.find<FollowerFollowingDb>();
 
   NetworkController networkController = Get.find<NetworkController>();
+
+  CommentDbController commentDbController = Get.find<CommentDbController>();
 
   RxList finalPosts = [].obs;
 

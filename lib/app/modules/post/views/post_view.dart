@@ -110,7 +110,10 @@ class PostView extends GetView<PostController> {
                                     data['userImageUrl'],
                                   ),
                                 ),
-                                title: Text(data['userName']),
+                                title: Text(
+                                  data['userName'],
+                                  style: Env.textStyles.commentUserNameStyle,
+                                ),
                                 subtitle: Text(data['comment']),
                                 trailing: Text(
                                   timeago.format(data['timestamp'].toDate()),

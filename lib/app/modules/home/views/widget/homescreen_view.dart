@@ -13,7 +13,9 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class HomeScreenView extends GetView<HomeController> {
-  const HomeScreenView({Key? key}) : super(key: key);
+  // const HomeScreenView({Key? key}) : super(key: key);
+
+  int numOfComments = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,9 @@ class HomeScreenView extends GetView<HomeController> {
 
                     DateTime time =
                         (DateTime.parse(data["createdAt"].toDate().toString()));
+
+                    // numOfComments = controller.commentDbController
+                    //     .getComment(postId: data["id"]);
 
                     return SizedBox(
                       height: MediaQuery.of(context).size.height / 2,
@@ -157,7 +162,7 @@ class HomeScreenView extends GetView<HomeController> {
                                   }
                                 },
                                 comments: controller
-                                    .followerFollowingDb.postCollection.length,
+                                    .commentDbController.numnerOfComments,
                                 onCommentOnPressed: () {
                                   // controller.commentOnPressed(doc);
 

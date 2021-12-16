@@ -23,6 +23,14 @@ class CommentDbController extends GetxController {
     });
   }
 
+  int numnerOfComments = 0;
+
+  Future<int> getComment({required String postId}) async {
+    QuerySnapshot snapshot =
+        await commetsRef.doc(postId).collection("comments").get();
+    return snapshot.docs.length;
+  }
+
   @override
   void onInit() {
     // TODO: implement onInit
