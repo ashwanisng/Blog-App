@@ -13,9 +13,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class HomeScreenView extends GetView<HomeController> {
-  // const HomeScreenView({Key? key}) : super(key: key);
-
-  int numOfComments = 0;
+  const HomeScreenView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -161,17 +159,8 @@ class HomeScreenView extends GetView<HomeController> {
                                         .decreaseDisLikeCount();
                                   }
                                 },
-                                comments: controller
-                                    .commentDbController.numnerOfComments,
-                                onCommentOnPressed: () {
-                                  // controller.commentOnPressed(doc);
-
-                                  // for (var i = 0;
-                                  //     i < controller.postService.followingList.length;
-                                  //     i++) {
-                                  //   print(controller.postService.followingList[i]);
-                                  // }
-                                },
+                                comments: 0,
+                                onCommentOnPressed: () {},
                               ),
                             ),
                           ),
