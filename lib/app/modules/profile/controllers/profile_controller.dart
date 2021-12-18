@@ -2,6 +2,7 @@
 
 import 'package:blog_app/app/data/service/network_controller.dart';
 import 'package:blog_app/app/global/firebase/auth/auth.dart';
+import 'package:blog_app/app/global/firebase/database/follower_following_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
 
 import 'package:get/get.dart';
@@ -13,9 +14,16 @@ class ProfileController extends GetxController {
 
   NetworkController networkController = Get.find<NetworkController>();
 
+  FollowerFollowingDb followerFollowingDb = Get.find<FollowerFollowingDb>();
+
   @override
   void onInit() {
     userDbController.fetchAllUserDetails();
+
+    followerFollowingDb
+        .getFollowersCountOfViewedUser(userDbController.userData[0]['uid']);
+    followerFollowingDb
+        .getFollowingCountOfViwedUser(userDbController.userData[0]['uid']);
     super.onInit();
   }
 

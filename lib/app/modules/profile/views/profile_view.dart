@@ -197,7 +197,7 @@ class ProfileView extends GetView<ProfileController> {
                             children: [
                               Flexible(
                                 child: Text(
-                                  "10",
+                                  "  10",
                                   style: Env.textStyles.text.copyWith(
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -218,13 +218,16 @@ class ProfileView extends GetView<ProfileController> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Flexible(
-                                child: Text(
-                                  "10",
+                                  child: Obx(
+                                () => Text(
+                                  controller.followerFollowingDb
+                                      .followerCountOfViwedUser
+                                      .toString(),
                                   style: Env.textStyles.text.copyWith(
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              ),
+                              )),
                               Flexible(
                                 child: Text(
                                   "Followers",
@@ -240,10 +243,14 @@ class ProfileView extends GetView<ProfileController> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Flexible(
-                                child: Text(
-                                  "10",
-                                  style: Env.textStyles.text.copyWith(
-                                    fontWeight: FontWeight.w500,
+                                child: Obx(
+                                  () => Text(
+                                    controller.followerFollowingDb
+                                        .followingCountOfViwedUser
+                                        .toString(),
+                                    style: Env.textStyles.text.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                               ),
