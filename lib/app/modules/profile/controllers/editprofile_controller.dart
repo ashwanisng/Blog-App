@@ -29,7 +29,8 @@ class EditProfileController extends GetxController {
   UserDbController userDb = Get.find<UserDbController>();
 
   uploadUserDetails() {
-    userDb.uploadUserData(UserModel(
+    userDb.uploadUserData(
+      UserModel(
         uid: auth.currentUser!.uid,
         name: nameController.text.trim(),
         email: emailController.text.trim(),
@@ -37,7 +38,9 @@ class EditProfileController extends GetxController {
         userName: usernameController.text.trim(),
         bio: bioController.text.trim(),
         location: locationController.text.trim(),
-        isFollowing: false));
+        isFollowing: false,
+      ),
+    );
   }
 
   Future selectProfileImage(ImageSource imageSource) async {

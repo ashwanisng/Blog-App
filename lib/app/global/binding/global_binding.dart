@@ -36,6 +36,7 @@ class GlobalBinding extends Bindings {
 
     Get.lazyPut<NotificationController>(
       () => NotificationController(),
+      fenix: true,
     );
 
     Get.lazyPut<ProfileController>(

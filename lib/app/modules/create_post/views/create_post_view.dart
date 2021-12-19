@@ -119,7 +119,7 @@ class CreatePostView extends GetView<CreatePostController> {
                           Expanded(
                             flex: 4,
                             child: TextField(
-                              controller: controller.captionController,
+                              controller: controller.locationController,
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
@@ -145,7 +145,9 @@ class CreatePostView extends GetView<CreatePostController> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  controller.getCurrentLocation();
+                                },
                                 icon: const Icon(
                                   CupertinoIcons.location_solid,
                                   color: Colors.green,
