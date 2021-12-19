@@ -1,6 +1,5 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/profile/views/components/edit_profile.dart';
-import 'package:blog_app/app/utils/custom_card.dart';
 import 'package:blog_app/app/utils/no_internet.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +26,15 @@ class ProfileView extends GetView<ProfileController> {
           'Account',
           style: Env.textStyles.text.copyWith(color: Env.colors.primaryBlue),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              controller.authService.signOut();
+            },
+          ),
+        ],
+        iconTheme: IconThemeData(color: Env.colors.primaryBlue),
       ),
       body: Obx(
         () => controller.networkController.isInternetConnected.isTrue
@@ -196,10 +204,13 @@ class ProfileView extends GetView<ProfileController> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Flexible(
-                                child: Text(
-                                  "  10",
-                                  style: Env.textStyles.text.copyWith(
-                                    fontWeight: FontWeight.w500,
+                                child: Obx(
+                                  () => Text(
+                                    controller.postService.userPostCount
+                                        .toString(),
+                                    style: Env.textStyles.text.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                               ),
