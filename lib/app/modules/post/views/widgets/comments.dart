@@ -10,13 +10,14 @@ class Comments extends StatelessWidget {
   final Timestamp timestamp;
   final String userId;
 
-  Comments({
+  const Comments({
+    Key? key,
     required this.userName,
     required this.avatarUrl,
     required this.comment,
     required this.timestamp,
     required this.userId,
-  });
+  }) : super(key: key);
 
   factory Comments.fromDocument(DocumentSnapshot doc) {
     return Comments(
@@ -39,7 +40,7 @@ class Comments extends StatelessWidget {
           title: Text(comment),
           subtitle: Text(timeago.format(timestamp.toDate())),
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }

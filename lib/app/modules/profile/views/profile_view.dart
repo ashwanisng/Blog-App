@@ -28,7 +28,7 @@ class ProfileView extends GetView<ProfileController> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () {
               controller.authService.signOut();
             },
@@ -82,7 +82,7 @@ class ProfileView extends GetView<ProfileController> {
                           padding: const EdgeInsets.all(8.0),
                           child: IconButton(
                             onPressed: () {
-                              Get.to(() => EditProfile());
+                              Get.to(() => const EditProfile());
                             },
                             icon: Icon(
                               Icons.settings,

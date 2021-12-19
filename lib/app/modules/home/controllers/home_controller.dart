@@ -32,7 +32,7 @@ class HomeController extends GetxController {
     bottomBannerAd = BannerAd(
       adUnitId: AdHelper.bannerAdUnitId,
       size: AdSize.banner,
-      request: AdRequest(),
+      request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (_) {
           isBottomBannerAdLoaded.value = true;

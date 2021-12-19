@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/create_post/views/components/create_post_header.dart';
 import 'package:blog_app/app/utils/no_internet.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:blog_app/app/modules/create_post/controllers/create_post_controller.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreatePostView extends GetView<CreatePostController> {
   const CreatePostView({Key? key}) : super(key: key);
@@ -76,16 +79,26 @@ class CreatePostView extends GetView<CreatePostController> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.38,
-                        width: MediaQuery.of(context).size.width,
-                        color: Colors.greenAccent,
-                        child: Expanded(
-                          child: Image.asset(
-                            "assets/images/14_No Search Results.png",
-                            fit: BoxFit.contain,
+                    InkWell(
+                      onTap: () {
+                        Get.bottomSheet(bottomsheet(),
+                            backgroundColor: Colors.white);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Obx(
+                          () => Container(
+                            height: MediaQuery.of(context).size.height * 0.38,
+                            width: MediaQuery.of(context).size.width,
+                            color: const Color(0xffe7edeb),
+                            child: controller.imagePath.value.isEmpty
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : Image.file(
+                                    File(controller.imagePath.value),
+                                    fit: BoxFit.contain,
+                                  ),
                           ),
                         ),
                       ),
@@ -164,6 +177,51 @@ class CreatePostView extends GetView<CreatePostController> {
             : const NoInternet(),
       ),
       resizeToAvoidBottomInset: true,
+    );
+  }
+
+  Widget bottomsheet() {
+    return SizedBox(
+      height: 100,
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          InkWell(
+            onTap: () {
+              Get.back();
+              controller.getImageFromDevice(ImageSource.camera);
+            },
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.camera_alt),
+                ),
+                Text(
+                  "Camera",
+                  style: Env.textStyles.text.copyWith(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Get.back();
+              controller.getImageFromDevice(ImageSource.gallery);
+            },
+            child: Row(
+              children: [
+                IconButton(onPressed: () {}, icon: const Icon(Icons.image)),
+                Text(
+                  "Gallery",
+                  style: Env.textStyles.text.copyWith(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
