@@ -1,11 +1,15 @@
 // ignore_for_file: unnecessary_overrides
 
+import 'dart:io';
+
 import 'package:blog_app/app/data/model/post.dart';
 import 'package:blog_app/app/data/service/network_controller.dart';
 import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -22,7 +26,10 @@ class CreatePostController extends GetxController {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   TextEditingController captionController = TextEditingController();
 
+  FirebaseStorage storage = FirebaseStorage.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
   late var imagePath = ''.obs;
+  late String downloadUrl;
 
   Uuid uuid = const Uuid();
 
@@ -33,9 +40,9 @@ class CreatePostController extends GetxController {
     postService.uploadUserPost(
       PostModel(
         id: uuid.v4(),
-        title: titleController.text,
-        content: contentController.text,
-        description: descriptionController.text,
+        caption: captionController.text,
+        location: locationController.text,
+        postUrl: downloadUrl,
         userId: firebaseAuth.currentUser!.uid,
         likes: 0,
         dislikes: 0,
@@ -46,9 +53,9 @@ class CreatePostController extends GetxController {
         userLocationOfUser: userDbController.userData[0]['location'],
       ),
     );
-    titleController.clear();
-    descriptionController.clear();
-    contentController.clear();
+    captionController.clear();
+    locationController.clear();
+    imagePath.value = '';
   }
 
   void getCurrentLocation() async {
@@ -90,9 +97,32 @@ class CreatePostController extends GetxController {
     var imagePicker = await ImagePicker().pickImage(source: source);
 
     if (imagePicker != null) {
-      // final imageFile = File(imagePicker.path);
+      final imageFile = File(imagePicker.path);
 
       imagePath.value = imagePicker.path;
+
+      var snapshot = await storage
+          .ref()
+          .child('userPosts/${imagePicker.name}')
+          .putFile(imageFile);
+
+      downloadUrl = await snapshot.ref.getDownloadURL();
+
+      Get.snackbar(
+        'Success',
+        'Image Selected',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.black,
+        colorText: Colors.white,
+      );
+    } else {
+      Get.snackbar(
+        'Error',
+        'Image Not Selected',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.black,
+        colorText: Colors.white,
+      );
     }
   }
 

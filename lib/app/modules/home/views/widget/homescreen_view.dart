@@ -1,13 +1,12 @@
 import 'package:blog_app/app/utils/no_internet.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/home/controllers/home_controller.dart';
-import 'package:blog_app/app/modules/home/views/components/description_text.dart';
 import 'package:blog_app/app/utils/footer.dart';
 import 'package:blog_app/app/modules/home/views/components/header.dart';
-import 'package:blog_app/app/modules/home/views/components/topic_name.dart';
 import 'package:blog_app/app/modules/post/views/post_view.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -57,9 +56,10 @@ class HomeScreenView extends GetView<HomeController> {
                     //     .getComment(postId: data["id"]);
 
                     return SizedBox(
-                      height: MediaQuery.of(context).size.height / 2,
+                      height: MediaQuery.of(context).size.height / 1.8,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Obx(
                             () => controller
@@ -80,12 +80,14 @@ class HomeScreenView extends GetView<HomeController> {
                                     ),
                                   ),
                           ),
-                          Expanded(child: TopicName(topicName: data["title"])),
+                          // Expanded(child: TopicName(topicName: data["title"])),
                           const SizedBox(height: 5),
                           GestureDetector(
                             onTap: () {
                               Get.to(() => const PostView(), arguments: {
-                                "title": data["title"],
+                                "title": data["photoUrl"],
+                                'captions': data["caption"],
+                                'location': data["location"],
                                 "content": data["content"],
                                 "createdAt": data["createdAt"],
                                 "postId": data["id"],
@@ -97,8 +99,16 @@ class HomeScreenView extends GetView<HomeController> {
                               });
                             },
                             child: Expanded(
-                              child: DescriptionText(
-                                description: data["description"],
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.38,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: CachedNetworkImage(
+                                    imageUrl: data['postUrl'],
+                                  ),
+                                ),
                               ),
                             ),
                           ),

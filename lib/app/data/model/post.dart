@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PostModel {
   final String id;
-  final String title;
-  final String content;
-  final String description;
+  final String caption;
+  final String location;
+  final String postUrl;
   final String userId;
   final int likes;
   final int dislikes;
@@ -17,9 +17,9 @@ class PostModel {
 
   PostModel({
     required this.id,
-    required this.title,
-    required this.content,
-    required this.description,
+    required this.caption,
+    required this.location,
+    required this.postUrl,
     required this.userId,
     required this.likes,
     required this.dislikes,
@@ -34,9 +34,9 @@ class PostModel {
   factory PostModel.fromDocument(DocumentSnapshot doc) {
     return PostModel(
       id: doc['id'],
-      title: doc['title'],
-      content: doc['content'],
-      description: doc['description'],
+      caption: doc['caption'],
+      location: doc['location'],
+      postUrl: doc['postUrl'],
       userId: doc['userId'],
       likes: doc['likes'],
       dislikes: doc['dislikes'],
@@ -52,9 +52,9 @@ class PostModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'title': title,
-      'content': content,
-      'description': description,
+      'caption': caption,
+      'location': location,
+      'postUrl': postUrl,
       'userId': userId,
       'likes': likes,
       'dislikes': dislikes,
