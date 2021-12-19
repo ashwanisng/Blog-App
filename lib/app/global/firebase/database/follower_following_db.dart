@@ -88,8 +88,6 @@ class FollowerFollowingDb extends GetxController {
       }
 
       postCollection.value = postList;
-
-      print(postCollection.length);
     } catch (e) {
       print(e.toString());
     }

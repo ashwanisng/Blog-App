@@ -22,7 +22,7 @@ class HomeView extends StatelessWidget {
       body: Obx(
         () => IndexedStack(
           index: landingPageController.slectedIndex.value,
-          children:  [
+          children: const [
             HomeScreenView(),
             ExploreView(),
             CreatePostView(),

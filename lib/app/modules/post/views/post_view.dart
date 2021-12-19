@@ -1,5 +1,4 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
-import 'package:blog_app/app/modules/post/views/widgets/comments.dart';
 import 'package:blog_app/app/utils/footer.dart';
 import 'package:blog_app/app/utils/no_internet.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -70,7 +69,7 @@ class PostView extends GetView<PostController> {
                           ),
                         ),
                       ),
-                      Divider(),
+                      const Divider(),
                       Footer(
                         likes: 142,
                         dislikes: 142,
@@ -90,8 +89,6 @@ class PostView extends GetView<PostController> {
                             .orderBy("timestamp", descending: false)
                             .snapshots(),
                         builder: (context, snapshot) {
-                          print(snapshot.data!.docs.length);
-                          print(controller.postId!);
                           if (!snapshot.hasData) {
                             return const Center(
                               child: CircularProgressIndicator(),

@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
 class CreatePostController extends GetxController {
@@ -20,6 +21,8 @@ class CreatePostController extends GetxController {
   PostService postService = Get.find<PostService>();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   TextEditingController captionController = TextEditingController();
+
+  late var imagePath = ''.obs;
 
   Uuid uuid = const Uuid();
 
@@ -61,11 +64,6 @@ class CreatePostController extends GetxController {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
         return Future.error('Location permissions are denied');
       }
     }
@@ -86,8 +84,16 @@ class CreatePostController extends GetxController {
 
     String formatedAdress = "${place.locality}, ${place.country}";
     locationController.text = formatedAdress;
+  }
 
-    print(formatedAdress);
+  void getImageFromDevice(ImageSource source) async {
+    var imagePicker = await ImagePicker().pickImage(source: source);
+
+    if (imagePicker != null) {
+      // final imageFile = File(imagePicker.path);
+
+      imagePath.value = imagePicker.path;
+    }
   }
 
   @override
