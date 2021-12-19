@@ -1,6 +1,7 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/create_post/views/components/create_post_header.dart';
 import 'package:blog_app/app/utils/no_internet.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -75,24 +76,97 @@ class CreatePostView extends GetView<CreatePostController> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.all(8.0),
-                    //   child: Container(
-                    //     decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //     height: MediaQuery.of(context).size.height * 0.3,
-                    //     child: Center(
-                    //       child: IconButton(
-                    //           onPressed: () {},
-                    //           icon: const Icon(
-                    //             Icons.image,
-                    //             size: 50,
-                    //           )),
-                    //     ),
-                    //   ),
-                    // ),
                     Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.38,
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.greenAccent,
+                        child: Expanded(
+                          child: Image.asset(
+                            "assets/images/14_No Search Results.png",
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextField(
+                        controller: controller.captionController,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: const Color(0xffe7edeb),
+                          hintText: "Write a caption...",
+                          prefixIcon: Icon(
+                            CupertinoIcons.captions_bubble_fill,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: TextField(
+                              controller: controller.captionController,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderSide: BorderSide.none,
+                                ),
+                                filled: true,
+                                fillColor: const Color(0xffe7edeb),
+                                hintText: "Enter your location...",
+                                prefixIcon: Icon(
+                                  CupertinoIcons.location_solid,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xffe7edeb),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  CupertinoIcons.location_solid,
+                                  color: Colors.green,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+            : const NoInternet(),
+      ),
+      resizeToAvoidBottomInset: true,
+    );
+  }
+}
+/**
+ * Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
                         controller: controller.titleController,
@@ -168,12 +242,4 @@ class CreatePostView extends GetView<CreatePostController> {
                         ),
                       ],
                     )
-                  ],
-                ),
-              )
-            : const NoInternet(),
-      ),
-      resizeToAvoidBottomInset: true,
-    );
-  }
-}
+ */
