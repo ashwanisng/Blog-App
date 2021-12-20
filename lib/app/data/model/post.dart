@@ -6,8 +6,9 @@ class PostModel {
   final String location;
   final String postUrl;
   final String userId;
-  final int likes;
-  final int dislikes;
+  final bool isLiked;
+  final dynamic likes;
+  final int likeCount;
   // final int comments;
   final DateTime createdAt;
   final String imageUrlOfUser;
@@ -21,8 +22,9 @@ class PostModel {
     required this.location,
     required this.postUrl,
     required this.userId,
+    required this.isLiked,
     required this.likes,
-    required this.dislikes,
+    required this.likeCount,
     // required this.comments,
     required this.createdAt,
     required this.imageUrlOfUser,
@@ -38,8 +40,9 @@ class PostModel {
       location: doc['location'],
       postUrl: doc['postUrl'],
       userId: doc['userId'],
+      isLiked: doc['isLiked'],
       likes: doc['likes'],
-      dislikes: doc['dislikes'],
+      likeCount: doc['likeCount'],
       // comments: doc['comments'],
       createdAt: doc['createdAt'],
       imageUrlOfUser: doc['imageUrlOfUser'],
@@ -56,8 +59,9 @@ class PostModel {
       'location': location,
       'postUrl': postUrl,
       'userId': userId,
+      'isLiked': isLiked,
       'likes': likes,
-      'dislikes': dislikes,
+      'likeCount': likeCount,
       // 'comments': comments,
       'createdAt': createdAt,
       'imageUrlOfUser': imageUrlOfUser,

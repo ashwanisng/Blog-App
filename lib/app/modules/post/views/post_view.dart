@@ -71,13 +71,13 @@ class PostView extends GetView<PostController> {
                       const Divider(),
                       Footer(
                         likes: 142,
-                        dislikes: 142,
+                        // dislikes: 142,
                         comments: 5,
                         onLikeOnPressed: () {},
-                        onDislikeOnPressed: () {},
+                        // onDislikeOnPressed: () {},
                         onCommentOnPressed: () {},
                         likeIcon: const Icon(Icons.thumb_up),
-                        dislikeIcon: const Icon(Icons.thumb_down),
+                        // dislikeIcon: const Icon(Icons.thumb_down),
                       ),
                       const Divider(),
                       StreamBuilder<QuerySnapshot>(

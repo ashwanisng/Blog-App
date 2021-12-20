@@ -120,7 +120,7 @@ class HomeScreenView extends GetView<HomeController> {
                           Obx(
                             () => Expanded(
                               child: Footer(
-                                likes: data["likes"],
+                                likes: controller.postService.likeCount.value,
                                 likeIcon: controller.postService.isLiked.value
                                     ? Icon(
                                         Icons.thumb_up_alt_sharp,
@@ -130,48 +130,11 @@ class HomeScreenView extends GetView<HomeController> {
                                         Icons.thumb_up_alt_sharp,
                                         color: Colors.grey,
                                       ),
-                                onLikeOnPressed: () {
-                                  controller.postService.isLiked.value == true
-                                      ? controller.postService.isLiked.value =
-                                          false
-                                      : controller.postService.isLiked.value =
-                                          true;
-
-                                  if (controller.postService.isLiked.value ==
-                                      true) {
-                                    controller.postService.like();
-                                  } else {
-                                    controller.postService.decreaseLike();
-                                  }
-                                },
-                                dislikes: data["dislikes"],
-                                dislikeIcon:
-                                    controller.postService.isDisliked.value
-                                        ? const Icon(
-                                            Icons.thumb_down_sharp,
-                                            color: Colors.red,
-                                          )
-                                        : const Icon(
-                                            Icons.thumb_up_alt_sharp,
-                                            color: Colors.grey,
-                                          ),
-                                onDislikeOnPressed: () {
-                                  controller.postService.isDisliked.value ==
-                                          true
-                                      ? controller
-                                          .postService.isDisliked.value = false
-                                      : controller
-                                          .postService.isDisliked.value = true;
-
-                                  if (controller.postService.isDisliked.value ==
-                                      true) {
-                                    controller.postService
-                                        .disLikeCountIncrease();
-                                  } else {
-                                    controller.postService
-                                        .decreaseDisLikeCount();
-                                  }
-                                },
+                                onLikeOnPressed: () =>
+                                    controller.postService.handleLikePost(
+                                  userId: data["userId"],
+                                  postId: data["id"],
+                                ),
                                 comments: 0,
                                 onCommentOnPressed: () {},
                               ),

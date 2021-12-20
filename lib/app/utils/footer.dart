@@ -5,25 +5,25 @@ import 'package:get/get.dart';
 
 class Footer extends StatelessWidget {
   final int? likes;
-  final int? dislikes;
+  // final int? dislikes;
   final int? comments;
   final Icon likeIcon;
-  final Icon dislikeIcon;
+  // final Icon dislikeIcon;
 
   final Function()? onLikeOnPressed;
-  final Function()? onDislikeOnPressed;
+  // final Function()? onDislikeOnPressed;
   final Function()? onCommentOnPressed;
 
   // ignore: use_key_in_widget_constructors
   const Footer({
     required this.likes,
-    required this.dislikes,
+    // required this.dislikes,
     required this.comments,
     required this.onLikeOnPressed,
-    required this.onDislikeOnPressed,
+    // required this.onDislikeOnPressed,
     required this.onCommentOnPressed,
     required this.likeIcon,
-    required this.dislikeIcon,
+    // required this.dislikeIcon,
   });
 
   @override
@@ -43,15 +43,15 @@ class Footer extends StatelessWidget {
               Text(likes.toString()),
             ],
           ),
-          Row(
-            children: [
-              IconButton(
-                icon: dislikeIcon,
-                onPressed: onDislikeOnPressed,
-              ),
-              Text(dislikes.toString()),
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     IconButton(
+          //       icon: dislikeIcon,
+          //       onPressed: onDislikeOnPressed,
+          //     ),
+          //     Text(dislikes.toString()),
+          //   ],
+          // ),
           Row(
             children: [
               IconButton(

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
 class PostService extends GetxController {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -16,12 +17,11 @@ class PostService extends GetxController {
 
   var isLiked = false.obs;
 
-  var isDisliked = false.obs;
-  var _dislikeCount = 0.obs;
-  Rx<int> get dislikeCount => _dislikeCount;
+  // var isDisliked = false.obs;
+  // var _dislikeCount = 0.obs;
+  // Rx<int> get dislikeCount => _dislikeCount;
 
-  Rx<int> _likes = 0.obs;
-  Rx<int> get likes => _likes;
+  var likeCount = 0.obs;
 
   List postList = [];
 
@@ -39,50 +39,67 @@ class PostService extends GetxController {
     userPostCount.value = querySnapshot.docs.length;
   }
 
-  void like() async {
-    _likes.value++;
-    QuerySnapshot querySnapshot =
-        await postRef.doc(auth.currentUser!.uid).collection("userPosts").get();
+  // updateLikeCount(String postId, int count) async {
+  //   await FirebaseFirestore.instance
+  //       .collection('posts')
+  //       .doc(auth.currentUser!.uid)
+  //       .collection('userPosts')
+  //       .doc(postId)
+  //       .update({'likeCount': count});
+  // }
 
-    for (var doc in querySnapshot.docs) {
-      await doc.reference.update({
-        'likes': _likes.value,
+  handleLikePost({required String userId, required String postId}) async {
+    bool _isLiked = false;
+
+    await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(userId)
+        .collection('userPosts')
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        if (element.data()['likes'][auth.currentUser!.uid] == null) {
+          _isLiked = false;
+        } else {
+          _isLiked = element.data()['likes'][auth.currentUser!.uid];
+        }
       });
+    });
+
+    if (_isLiked) {
+      await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(userId)
+          .collection("userPosts")
+          .doc(postId)
+          .update({
+        'likes.${auth.currentUser!.uid}': false,
+        'likeCount': likeCount.value <= 0 ? 0 : likeCount.value - 1
+      });
+
+      isLiked.value = false;
+      likeCount.value--;
+
+      // updateLikeCount(postId, likeCount.value);
+    } else {
+      await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(userId)
+          .collection("userPosts")
+          .doc(postId)
+          .update({
+        'likes.${auth.currentUser!.uid}': true,
+        'likeCount': likeCount.value + 1,
+      });
+
+      isLiked.value = true;
+      likeCount.value++;
+
+      // updateLikeCount(postId, likeCount.value);
     }
   }
 
-  void decreaseLike() async {
-    _likes.value--;
-    QuerySnapshot querySnapshot = await postRef.get();
-
-    for (var doc in querySnapshot.docs) {
-      await doc.reference.update({
-        'likes': _likes.value,
-      });
-    }
-  }
-
-  void disLikeCountIncrease() async {
-    _dislikeCount.value++;
-    QuerySnapshot querySnapshot = await postRef.get();
-
-    for (var doc in querySnapshot.docs) {
-      await doc.reference.update({
-        'dislikes': _dislikeCount.value,
-      });
-    }
-  }
-
-  void decreaseDisLikeCount() async {
-    _dislikeCount.value--;
-    QuerySnapshot querySnapshot = await postRef.get();
-
-    for (var doc in querySnapshot.docs) {
-      await doc.reference.update({
-        'dislikes': _dislikeCount.value,
-      });
-    }
-  }
+  var id = Uuid().v4();
 
   Future<void> uploadUserPost(dynamic posts) async {
     try {
@@ -90,7 +107,8 @@ class PostService extends GetxController {
       await postRef
           .doc(auth.currentUser!.uid)
           .collection("userPosts")
-          .add(posts.toJson());
+          .doc(id)
+          .set(posts.toJson());
 
       Get.snackbar(
         "Success!",
@@ -111,6 +129,7 @@ class PostService extends GetxController {
       );
     } finally {
       isUploading.value = false;
+      id = Uuid().v4();
     }
   }
 }

@@ -31,21 +31,26 @@ class CreatePostController extends GetxController {
   late var imagePath = ''.obs;
   late String downloadUrl;
 
-  Uuid uuid = const Uuid();
+  // Uuid uuid = const Uuid();
 
   UserDbController userDbController = Get.find<UserDbController>();
   NetworkController networkController = Get.find<NetworkController>();
 
+  // var id = const Uuid().v4();
+
   void createPost() {
     postService.uploadUserPost(
       PostModel(
-        id: uuid.v4(),
+        id: postService.id,
         caption: captionController.text,
         location: locationController.text,
         postUrl: downloadUrl,
         userId: firebaseAuth.currentUser!.uid,
-        likes: 0,
-        dislikes: 0,
+        likes: {
+          firebaseAuth.currentUser!.uid: false,
+        },
+        isLiked: false,
+        likeCount: 0,
         createdAt: DateTime.now(),
         imageUrlOfUser: userDbController.userData[0]['photoUrl'],
         userNameOfUser: userDbController.userData[0]['userName'],
