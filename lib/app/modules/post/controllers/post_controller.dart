@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PostController extends GetxController {
-  String? title;
-  String? body;
+  String? caption;
   DateTime? date;
   String? userName;
   String? userId;
   String? postId;
+  String? postUrl;
 
   String? userImageUrl;
 
@@ -40,13 +40,13 @@ class PostController extends GetxController {
 
     dynamic data = Get.arguments;
 
-    title = data['title'];
-    body = data['content'];
+    caption = data['captions'];
     date = (data["createdAt"] as Timestamp).toDate();
     userName = data['userName'];
     userId = data['userId'];
     postId = data['postId'];
     userImageUrl = data['imageUrl'];
+    postUrl = data['postUrl'];
 
     uploadComment();
   }

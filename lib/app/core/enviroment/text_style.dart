@@ -53,7 +53,7 @@ class TextStyles {
 
   final TextStyle commentUserNameStyle = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: "Roboto",
   );
 

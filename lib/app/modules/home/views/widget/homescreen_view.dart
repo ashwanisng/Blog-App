@@ -52,11 +52,8 @@ class HomeScreenView extends GetView<HomeController> {
                     DateTime time =
                         (DateTime.parse(data["createdAt"].toDate().toString()));
 
-                    // numOfComments = controller.commentDbController
-                    //     .getComment(postId: data["id"]);
-
                     return SizedBox(
-                      height: MediaQuery.of(context).size.height / 1.8,
+                      height: MediaQuery.of(context).size.height / 1.6,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -80,12 +77,11 @@ class HomeScreenView extends GetView<HomeController> {
                                     ),
                                   ),
                           ),
-                          // Expanded(child: TopicName(topicName: data["title"])),
                           const SizedBox(height: 5),
                           GestureDetector(
                             onTap: () {
                               Get.to(() => const PostView(), arguments: {
-                                "title": data["photoUrl"],
+                                "postUrl": data["postUrl"],
                                 'captions': data["caption"],
                                 'location': data["location"],
                                 "content": data["content"],
@@ -110,6 +106,13 @@ class HomeScreenView extends GetView<HomeController> {
                                   ),
                                 ),
                               ),
+                            ),
+                          ),
+                          Flexible(
+                            child: Text(
+                              data["caption"],
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           const SizedBox(height: 5),

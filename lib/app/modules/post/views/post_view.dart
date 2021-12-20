@@ -47,8 +47,7 @@ class PostView extends GetView<PostController> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8.0, vertical: 4),
-                          child: Text(controller.title!,
-                              style: Env.textStyles.headline),
+                          child: Image.network(controller.postUrl!),
                         ),
                       ),
                       Padding(
@@ -64,7 +63,7 @@ class PostView extends GetView<PostController> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8.0, vertical: 4),
                           child: Text(
-                            controller.body!,
+                            controller.caption!,
                             style: Env.textStyles.smallText,
                           ),
                         ),
@@ -109,13 +108,18 @@ class PostView extends GetView<PostController> {
                                 ),
                                 title: Text(
                                   data['userName'],
-                                  style: Env.textStyles.commentUserNameStyle,
+                                  style: Env.textStyles.commentUserNameStyle
+                                      .copyWith(fontSize: 15),
                                 ),
-                                subtitle: Text(data['comment']),
+                                subtitle: Text(data['comment'],
+                                    style: Env.textStyles.labelText
+                                        .copyWith(color: Colors.black)),
                                 trailing: Text(
                                   timeago.format(data['timestamp'].toDate()),
-                                  style: Env.textStyles.labelText
-                                      .copyWith(color: Colors.grey),
+                                  style: Env.textStyles.labelText.copyWith(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                  ),
                                 ),
                               );
                             },
