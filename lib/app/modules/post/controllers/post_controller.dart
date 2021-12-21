@@ -33,26 +33,26 @@ class PostController extends GetxController {
         dateTime: DateTime.now(),
         userImageUrl: userImageUrl!,
       );
+      bool isNotPostOwner = postOwnerId != userDbController.userData[0]['uid'];
+
+      if (isNotPostOwner) {
+        await FirebaseFirestore.instance
+            .collection('notifications')
+            .doc(postOwnerId!)
+            .collection("notifications")
+            .add({
+          "postId": postId,
+          "userId": userId,
+          "userName": userName,
+          "userImageUrl": userImageUrl,
+          "commentData": commentController.text,
+          "type": "comment",
+          'postUrl': postUrl,
+          'timestamp': DateTime.now(),
+        });
+      }
     }
 
-    bool isNotPostOwner = postOwnerId != userDbController.userData[0]['uid'];
-
-    if (isNotPostOwner) {
-      await FirebaseFirestore.instance
-          .collection('notifications')
-          .doc(postOwnerId!)
-          .collection("notifications")
-          .add({
-        "postId": postId,
-        "userId": userId,
-        "userName": userName,
-        "userImageUrl": userImageUrl,
-        "commentData": commentController.text,
-        "type": "comment",
-        'postUrl': postUrl,
-        'timeStamp': DateTime.now(),
-      });
-    }
     commentController.clear();
   }
 
