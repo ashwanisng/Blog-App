@@ -2,6 +2,7 @@
 
 import 'package:blog_app/app/data/service/network_controller.dart';
 import 'package:blog_app/app/global/firebase/database/comment_db_controller.dart';
+import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,12 +14,14 @@ class PostController extends GetxController {
   String? userId;
   String? postId;
   String? postUrl;
+  String? postOwnerId;
 
   String? userImageUrl;
 
   NetworkController networkController = Get.find<NetworkController>();
   TextEditingController commentController = TextEditingController();
   CommentDbController commentDbController = Get.find<CommentDbController>();
+  UserDbController userDbController = Get.find<UserDbController>();
 
   uploadComment() async {
     if (commentController.text.isNotEmpty) {
@@ -30,6 +33,25 @@ class PostController extends GetxController {
         dateTime: DateTime.now(),
         userImageUrl: userImageUrl!,
       );
+    }
+
+    bool isNotPostOwner = postOwnerId != userDbController.userData[0]['uid'];
+
+    if (isNotPostOwner) {
+      await FirebaseFirestore.instance
+          .collection('notifications')
+          .doc(postOwnerId!)
+          .collection("notifications")
+          .add({
+        "postId": postId,
+        "userId": userId,
+        "userName": userName,
+        "userImageUrl": userImageUrl,
+        "commentData": commentController.text,
+        "type": "comment",
+        'postUrl': postUrl,
+        'timeStamp': DateTime.now(),
+      });
     }
     commentController.clear();
   }
@@ -47,6 +69,7 @@ class PostController extends GetxController {
     postId = data['postId'];
     userImageUrl = data['imageUrl'];
     postUrl = data['postUrl'];
+    postOwnerId = data['postOwnerId'];
 
     uploadComment();
   }

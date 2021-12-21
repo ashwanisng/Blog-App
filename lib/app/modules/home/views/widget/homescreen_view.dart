@@ -92,6 +92,7 @@ class HomeScreenView extends GetView<HomeController> {
                                 "userName": controller.userDb.userData[0]
                                     ["userName"],
                                 "userId": controller.userDb.userData[0]["uid"],
+                                "postOwnerId": data["userId"],
                               });
                             },
                             child: Expanded(
@@ -134,6 +135,7 @@ class HomeScreenView extends GetView<HomeController> {
                                     controller.postService.handleLikePost(
                                   userId: data["userId"],
                                   postId: data["id"],
+                                  postImage: data["postUrl"],
                                 ),
                                 comments: 0,
                                 onCommentOnPressed: () {},

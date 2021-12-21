@@ -1,5 +1,6 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/global/firebase/database/follower_following_db.dart';
+import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,12 @@ class PostService extends GetxController {
 
   CollectionReference postRef = FirebaseFirestore.instance.collection('posts');
 
+  CollectionReference notificationRef =
+      FirebaseFirestore.instance.collection('notifications');
+
   FollowerFollowingDb followerFollowingDb = Get.find<FollowerFollowingDb>();
+
+  UserDbController userDbController = Get.find<UserDbController>();
 
   var isUploading = false.obs;
 
@@ -39,16 +45,10 @@ class PostService extends GetxController {
     userPostCount.value = querySnapshot.docs.length;
   }
 
-  // updateLikeCount(String postId, int count) async {
-  //   await FirebaseFirestore.instance
-  //       .collection('posts')
-  //       .doc(auth.currentUser!.uid)
-  //       .collection('userPosts')
-  //       .doc(postId)
-  //       .update({'likeCount': count});
-  // }
-
-  handleLikePost({required String userId, required String postId}) async {
+  handleLikePost(
+      {required String userId,
+      required String postId,
+      String? postImage}) async {
     bool _isLiked = false;
 
     await FirebaseFirestore.instance
@@ -77,10 +77,10 @@ class PostService extends GetxController {
         'likeCount': likeCount.value <= 0 ? 0 : likeCount.value - 1
       });
 
+      deleteLikeToNotificationFeed(postOwnerId: userId, postId: postId);
+
       isLiked.value = false;
       likeCount.value--;
-
-      // updateLikeCount(postId, likeCount.value);
     } else {
       await FirebaseFirestore.instance
           .collection('posts')
@@ -92,10 +92,54 @@ class PostService extends GetxController {
         'likeCount': likeCount.value + 1,
       });
 
+      addLikeToNotificationFeed(
+          postOwnerId: userId, postId: postId, postImage: postImage);
+
       isLiked.value = true;
       likeCount.value++;
+    }
+  }
 
-      // updateLikeCount(postId, likeCount.value);
+  deleteLikeToNotificationFeed(
+      {required String postOwnerId, required String postId}) async {
+    bool isNotPostOwner = postOwnerId != userDbController.userData[0]['uid'];
+
+    if (isNotPostOwner) {
+      await notificationRef
+          .doc(postOwnerId)
+          .collection('notifications')
+          .doc(postId)
+          .get()
+          .then((value) {
+        if (value.exists) {
+          value.reference.delete();
+        }
+      });
+    }
+  }
+
+  addLikeToNotificationFeed(
+      {required String postOwnerId,
+      required String postId,
+      String? postImage}) async {
+    bool isNotPostOwner = userDbController.userData[0]['uid'] != postOwnerId;
+
+    if (isNotPostOwner) {
+      await notificationRef
+          .doc(postOwnerId)
+          .collection('notifications')
+          .doc(postId)
+          .set({
+        'postId': postId,
+        'postOwnerId': postOwnerId,
+        'userId': auth.currentUser!.uid,
+        'name': userDbController.userData[0]['name'],
+        'userImage': userDbController.userData[0]['photoUrl'],
+        'userName': userDbController.userData[0]['userName'],
+        'type': 'like',
+        'postImage': postImage,
+        'timestamp': DateTime.now(),
+      });
     }
   }
 
