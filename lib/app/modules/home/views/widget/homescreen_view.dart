@@ -93,6 +93,8 @@ class HomeScreenView extends GetView<HomeController> {
                                     ["userName"],
                                 "userId": controller.userDb.userData[0]["uid"],
                                 "postOwnerId": data["userId"],
+                                'userImageUrl': controller.userDb.userData[0]
+                                    ["photoUrl"],
                               });
                             },
                             child: Expanded(

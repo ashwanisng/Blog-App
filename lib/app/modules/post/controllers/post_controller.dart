@@ -44,10 +44,10 @@ class PostController extends GetxController {
           "postId": postId,
           "userId": userId,
           "userName": userName,
-          "userImageUrl": userImageUrl,
+          "userImage": userImageUrl,
           "commentData": commentController.text,
           "type": "comment",
-          'postUrl': postUrl,
+          'postImage': postUrl,
           'timestamp': DateTime.now(),
         });
       }
