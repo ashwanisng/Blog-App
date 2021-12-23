@@ -8,6 +8,7 @@ import 'package:blog_app/app/utils/footer.dart';
 import 'package:blog_app/app/modules/home/views/components/header.dart';
 import 'package:blog_app/app/modules/post/views/post_view.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class HomeScreenView extends GetView<HomeController> {
@@ -42,8 +43,7 @@ class HomeScreenView extends GetView<HomeController> {
                 onRefresh: () =>
                     controller.followerFollowingDb.getListOfUserFollowing(),
                 child: controller.followerFollowingDb
-                            .isPostCollectionListIsLoading ==
-                        false
+                        .isPostCollectionListIsLoading.isFalse
                     ? ListView.builder(
                         itemCount: controller
                             .followerFollowingDb.postCollection.length,
@@ -162,8 +162,88 @@ class HomeScreenView extends GetView<HomeController> {
                           );
                         },
                       )
-                    : Center(
-                        child: CircularProgressIndicator(),
+                    : ListView.builder(
+                        itemCount: 6,
+                        itemBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height / 1.6,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Shimmer.fromColors(
+                                  child: const Header(
+                                    username: "",
+                                    name: "",
+                                    image: "",
+                                    time: "",
+                                  ),
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                ),
+
+                                const SizedBox(height: 5),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Shimmer.fromColors(
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.38,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                      ),
+                                      baseColor: Colors.grey[300]!,
+                                      highlightColor: Colors.grey[100]!,
+                                    ),
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 12),
+                                    child: Shimmer.fromColors(
+                                      child: Text(
+                                        "",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Env.textStyles.text,
+                                      ),
+                                      baseColor: Colors.grey[300]!,
+                                      highlightColor: Colors.grey[100]!,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                // const Divider(),
+                                Expanded(
+                                  child: Shimmer.fromColors(
+                                    child: Footer(
+                                      likes: controller
+                                          .postService.likeCount.value,
+                                      likeIcon:
+                                          controller.postService.isLiked.value
+                                              ? Icon(
+                                                  Icons.thumb_up_alt_sharp,
+                                                  color: Env.colors.primaryBlue,
+                                                )
+                                              : const Icon(
+                                                  Icons.thumb_up_alt_sharp,
+                                                  color: Colors.grey,
+                                                ),
+                                      onLikeOnPressed: () {},
+                                      comments: 0,
+                                      onCommentOnPressed: () {},
+                                    ),
+                                    baseColor: Colors.grey[300]!,
+                                    highlightColor: Colors.grey[100]!,
+                                  ),
+                                ),
+                                const Divider()
+                              ],
+                            ),
+                          );
+                        },
                       ),
               )
             : const NoInternet(),
