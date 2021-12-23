@@ -1,5 +1,6 @@
 import 'package:blog_app/app/utils/no_internet.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:blog_app/app/core/enviroment/env.dart';
@@ -166,80 +167,207 @@ class HomeScreenView extends GetView<HomeController> {
                         itemCount: 6,
                         itemBuilder: (BuildContext context, int index) {
                           return SizedBox(
-                            height: MediaQuery.of(context).size.height / 1.6,
+                            height: MediaQuery.of(context).size.height / 1.71,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Shimmer.fromColors(
-                                  child: const Header(
-                                    username: "",
-                                    name: "",
-                                    image: "",
-                                    time: "",
+                                  child: SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.1,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 8,
+                                            right: 4,
+                                          ),
+                                          child: Expanded(
+                                            child: Shimmer.fromColors(
+                                              child: Container(
+                                                child: CircleAvatar(
+                                                  backgroundColor:
+                                                      Colors.grey[300],
+                                                  radius: 26,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.grey[300],
+                                                ),
+                                              ),
+                                              baseColor: Colors.grey[300]!,
+                                              highlightColor: Colors.grey[100]!,
+                                            ),
+                                          ),
+                                        ),
+                                        // const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Shimmer.fromColors(
+                                                child: Container(
+                                                  height: 16,
+                                                  color: Colors.grey[300],
+                                                ),
+                                                baseColor: Colors.grey[300]!,
+                                                highlightColor:
+                                                    Colors.grey[100]!,
+                                              ),
+                                              Shimmer.fromColors(
+                                                child: Container(
+                                                  height: 10,
+                                                  color: Colors.grey[300],
+                                                ),
+                                                baseColor: Colors.grey[300]!,
+                                                highlightColor:
+                                                    Colors.grey[100]!,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Flexible(
+                                                child: Shimmer.fromColors(
+                                                  child: Container(
+                                                    height: 16,
+                                                    color: Colors.grey[300],
+                                                  ),
+                                                  baseColor: Colors.grey[300]!,
+                                                  highlightColor:
+                                                      Colors.grey[100]!,
+                                                ),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {},
+                                                icon: Shimmer.fromColors(
+                                                    child: Icon(
+                                                      Icons.more_vert,
+                                                      color: Colors.grey[300],
+                                                    ),
+                                                    baseColor:
+                                                        Colors.grey[300]!,
+                                                    highlightColor:
+                                                        Colors.grey[100]!),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                   baseColor: Colors.grey[300]!,
                                   highlightColor: Colors.grey[100]!,
                                 ),
-
                                 const SizedBox(height: 5),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Shimmer.fromColors(
-                                      child: Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.38,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                      ),
-                                      baseColor: Colors.grey[300]!,
-                                      highlightColor: Colors.grey[100]!,
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
                                   ),
-                                ),
-                                Flexible(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 12),
-                                    child: Shimmer.fromColors(
-                                      child: Text(
-                                        "",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Env.textStyles.text,
-                                      ),
-                                      baseColor: Colors.grey[300]!,
-                                      highlightColor: Colors.grey[100]!,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                // const Divider(),
-                                Expanded(
                                   child: Shimmer.fromColors(
-                                    child: Footer(
-                                      likes: controller
-                                          .postService.likeCount.value,
-                                      likeIcon:
-                                          controller.postService.isLiked.value
-                                              ? Icon(
-                                                  Icons.thumb_up_alt_sharp,
-                                                  color: Env.colors.primaryBlue,
-                                                )
-                                              : const Icon(
-                                                  Icons.thumb_up_alt_sharp,
-                                                  color: Colors.grey,
-                                                ),
-                                      onLikeOnPressed: () {},
-                                      comments: 0,
-                                      onCommentOnPressed: () {},
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.32,
+                                      width: MediaQuery.of(context).size.width,
+                                      color: Colors.grey[300],
                                     ),
                                     baseColor: Colors.grey[300]!,
                                     highlightColor: Colors.grey[100]!,
                                   ),
                                 ),
-                                const Divider()
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 8,
+                                  ),
+                                  child: Shimmer.fromColors(
+                                    child: Container(
+                                      height: 16,
+                                      color: Colors.grey[300],
+                                    ),
+                                    baseColor: Colors.grey[300]!,
+                                    highlightColor: Colors.grey[100]!,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Shimmer.fromColors(
+                                  child: SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.07,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                              icon: Shimmer.fromColors(
+                                                child: Icon(
+                                                  Icons.thumb_up,
+                                                  color: Colors.grey[300],
+                                                ),
+                                                baseColor: Colors.grey[300]!,
+                                                highlightColor:
+                                                    Colors.grey[100]!,
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                            const Text(""),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                              icon: Shimmer.fromColors(
+                                                child: Icon(
+                                                  Icons.comment,
+                                                  color: Colors.grey[300],
+                                                ),
+                                                baseColor: Colors.grey[300]!,
+                                                highlightColor:
+                                                    Colors.grey[100]!,
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                            const Text(""),
+                                          ],
+                                        ),
+                                        IconButton(
+                                          icon: Shimmer.fromColors(
+                                            child: Icon(
+                                              CupertinoIcons.share,
+                                              color: Colors.grey[300],
+                                            ),
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!,
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                ),
+                                Shimmer.fromColors(
+                                  child: Divider(
+                                    color: Colors.grey[300],
+                                  ),
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                ),
                               ],
                             ),
                           );

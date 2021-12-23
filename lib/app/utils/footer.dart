@@ -43,15 +43,6 @@ class Footer extends StatelessWidget {
               Text(likes.toString()),
             ],
           ),
-          // Row(
-          //   children: [
-          //     IconButton(
-          //       icon: dislikeIcon,
-          //       onPressed: onDislikeOnPressed,
-          //     ),
-          //     Text(dislikes.toString()),
-          //   ],
-          // ),
           Row(
             children: [
               IconButton(
