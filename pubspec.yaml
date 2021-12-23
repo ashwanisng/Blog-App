@@ -52,6 +52,7 @@ dependencies:
   google_mobile_ads: ^1.0.1
   geolocator: ^8.0.1
   geocoding: ^2.0.1
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

@@ -8,13 +8,11 @@ import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:uuid/uuid.dart';
 
 class CreatePostController extends GetxController {
   TextEditingController titleController = TextEditingController();

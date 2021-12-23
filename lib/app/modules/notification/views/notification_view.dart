@@ -14,9 +14,15 @@ class NotificationView extends GetView<NotificationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Env.colors.background,
       appBar: AppBar(
-        title: const Text('NotificationView'),
-        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          'Notificatons',
+          style: Env.textStyles.text.copyWith(color: Env.colors.primaryBlue),
+        ),
+        iconTheme: IconThemeData(color: Env.colors.primaryBlue),
       ),
       body: Obx(
         () => controller.networkController.isInternetConnected.isTrue

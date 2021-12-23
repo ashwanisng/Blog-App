@@ -11,6 +11,8 @@ class FollowerFollowingDb extends GetxController {
   CollectionReference followerRef =
       FirebaseFirestore.instance.collection('followers');
 
+  var isPostCollectionListIsLoading = false.obs;
+
   var followingList = [];
 
   var postList = [];
@@ -65,6 +67,7 @@ class FollowerFollowingDb extends GetxController {
     FirebaseAuth _auth = FirebaseAuth.instance;
 
     try {
+      isPostCollectionListIsLoading.value = true;
       followingList.clear();
       postCollection.clear();
       var snapshot = await FirebaseFirestore.instance
@@ -90,6 +93,8 @@ class FollowerFollowingDb extends GetxController {
       postCollection.value = postList;
     } catch (e) {
       print(e.toString());
+    } finally {
+      isPostCollectionListIsLoading.value = false;
     }
   }
 
