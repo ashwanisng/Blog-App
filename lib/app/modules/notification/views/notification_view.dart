@@ -3,6 +3,7 @@ import 'package:blog_app/app/utils/no_internet.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:get/get.dart';
 
@@ -45,8 +46,6 @@ class NotificationView extends GetView<NotificationController> {
 
                         if (data['type'] == 'like') {
                           return Column(
-                            // Text(
-                            // '${data['userName']} has ${data['type']}d your post'),
                             children: [
                               ListTile(
                                 title: RichText(
@@ -181,11 +180,61 @@ class NotificationView extends GetView<NotificationController> {
                       },
                     );
                   } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return ListView.builder(
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            ListTile(
+                              title: Shimmer.fromColors(
+                                child: Container(
+                                  height: 16,
+                                  color: Colors.grey[300],
+                                ),
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
+                              ),
+                              subtitle: Shimmer.fromColors(
+                                child: Container(
+                                  height: 16,
+                                  color: Colors.grey[300],
+                                ),
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
+                              ),
+                              leading: Shimmer.fromColors(
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.grey[300],
+                                  radius: 26,
+                                ),
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
+                              ),
+                              trailing: Shimmer.fromColors(
+                                child: Container(
+                                  color: Colors.grey[300],
+                                  height: 50,
+                                  width: 40,
+                                ),
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
+                              ),
+                            ),
+                            Shimmer.fromColors(
+                              child: Divider(
+                                thickness: 1,
+                                color: Colors.grey[300],
+                              ),
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                            ),
+                          ],
+                        );
+                      },
                     );
                   }
-                })
+                },
+              )
             : const NoInternet(),
       ),
     );

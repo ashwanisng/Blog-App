@@ -91,13 +91,18 @@ class HomeScreenView extends GetView<HomeController> {
                                       "content": data["content"],
                                       "createdAt": data["createdAt"],
                                       "postId": data["id"],
+                                      "postOwnerId": data["userId"],
+                                      'postOwnerImageUrl':
+                                          data["imageUrlOfUser"],
+                                      'postOwnerName': data["nameOfUser"],
+                                      'postOwnerUsername':
+                                          data["userNameOfUser"],
                                       "imageUrl": controller.userDb.userData[0]
                                           ["photoUrl"],
                                       "userName": controller.userDb.userData[0]
                                           ["userName"],
                                       "userId": controller.userDb.userData[0]
                                           ["uid"],
-                                      "postOwnerId": data["userId"],
                                       'userImageUrl': controller
                                           .userDb.userData[0]["photoUrl"],
                                     });

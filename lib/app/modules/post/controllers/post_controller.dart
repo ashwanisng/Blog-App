@@ -2,6 +2,7 @@
 
 import 'package:blog_app/app/data/service/network_controller.dart';
 import 'package:blog_app/app/global/firebase/database/comment_db_controller.dart';
+import 'package:blog_app/app/global/firebase/database/follower_following_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,9 @@ class PostController extends GetxController {
   String? postId;
   String? postUrl;
   String? postOwnerId;
+  String? postOwnerName;
+  String? postOwnerPhotoUrl;
+  String? postOwnerUsername;
 
   String? userImageUrl;
 
@@ -22,6 +26,7 @@ class PostController extends GetxController {
   TextEditingController commentController = TextEditingController();
   CommentDbController commentDbController = Get.find<CommentDbController>();
   UserDbController userDbController = Get.find<UserDbController>();
+  FollowerFollowingDb followerFollowingDb = Get.find<FollowerFollowingDb>();
 
   uploadComment() async {
     if (commentController.text.isNotEmpty) {
@@ -63,13 +68,16 @@ class PostController extends GetxController {
     dynamic data = Get.arguments;
 
     caption = data['captions'];
-    date = (data["createdAt"] as Timestamp).toDate();
+    date = (DateTime.parse(data["createdAt"].toDate().toString()));
     userName = data['userName'];
     userId = data['userId'];
     postId = data['postId'];
     userImageUrl = data['imageUrl'];
     postUrl = data['postUrl'];
     postOwnerId = data['postOwnerId'];
+    postOwnerName = data['postOwnerName'];
+    postOwnerPhotoUrl = data['postOwnerImageUrl'];
+    postOwnerUsername = data['postOwnerUsername'];
 
     uploadComment();
   }

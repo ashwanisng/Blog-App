@@ -1,4 +1,5 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
+import 'package:blog_app/app/modules/home/views/components/header.dart';
 import 'package:blog_app/app/utils/footer.dart';
 import 'package:blog_app/app/utils/no_internet.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -43,20 +44,33 @@ class PostView extends GetView<PostController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Header(
+                        username: '@${controller.postOwnerUsername!}',
+                        name: controller.postOwnerName!,
+                        image: controller.postOwnerPhotoUrl!,
+                        time: timeago.format(controller.date!),
+                      ),
                       SizedBox(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8.0, vertical: 4),
-                          child: Image.network(controller.postUrl!),
+                          child: CachedNetworkImage(
+                            imageUrl: controller.postUrl!,
+                          ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text(
-                            DateFormat.yMMMMEEEEd().format(controller.date!),
-                            style: Env.textStyles.labelText
-                                .copyWith(color: Colors.grey)),
-                      ),
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              DateFormat.yMMMMEEEEd().format(controller.date!),
+                              textAlign: TextAlign.right,
+                              style: Env.textStyles.labelText.copyWith(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          )),
                       const SizedBox(height: 10),
                       SizedBox(
                         child: Padding(
