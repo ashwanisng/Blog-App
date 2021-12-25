@@ -28,7 +28,13 @@ class PostView extends GetView<PostController> {
               Icons.share,
               color: Env.colors.primaryBlue,
             ),
-            onPressed: () {},
+            onPressed: () {
+              controller.shareFun(
+                controller.postUrl!,
+                controller.caption!,
+                controller.postOwnerName!,
+              );
+            },
           ),
         ],
         iconTheme: IconThemeData(
@@ -91,6 +97,7 @@ class PostView extends GetView<PostController> {
                         // onDislikeOnPressed: () {},
                         onCommentOnPressed: () {},
                         likeIcon: const Icon(Icons.thumb_up),
+                        onShareOnPressed: () {},
                         // dislikeIcon: const Icon(Icons.thumb_down),
                       ),
                       const Divider(),

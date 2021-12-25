@@ -1,6 +1,5 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/login/views/login_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:blog_app/app/modules/register/controllers/register_controller.dart';

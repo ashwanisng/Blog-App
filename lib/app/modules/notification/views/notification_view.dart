@@ -27,214 +27,268 @@ class NotificationView extends GetView<NotificationController> {
       ),
       body: Obx(
         () => controller.networkController.isInternetConnected.isTrue
-            ? StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('notifications')
-                    .doc(controller.userDb.userData[0]['uid'])
-                    .collection("notifications")
-                    .orderBy('timestamp', descending: true)
-                    .limit(50)
-                    .snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                        var data = snapshot.data!.docs[index];
-                        DateTime time = (DateTime.parse(
-                            data["timestamp"].toDate().toString()));
+            ? controller.getNotificationFeed() == 0
+                ? StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('notifications')
+                        .doc(controller.userDb.userData[0]['uid'])
+                        .collection("notifications")
+                        .orderBy('timestamp', descending: true)
+                        .limit(50)
+                        .snapshots(),
+                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            var data = snapshot.data!.docs[index];
+                            DateTime time = (DateTime.parse(
+                                data["timestamp"].toDate().toString()));
 
-                        if (data['type'] == 'like') {
-                          return Column(
-                            children: [
-                              ListTile(
-                                title: RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: '${data['userName']} ',
-                                        style: Env.textStyles.text.copyWith(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black,
-                                          fontFamily: "Roboto",
-                                        ),
+                            if (data['type'] == 'like') {
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    title: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: '${data['userName']} ',
+                                            style: Env.textStyles.text.copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: 'has ',
+                                            style: Env.textStyles.labelText
+                                                .copyWith(
+                                              color: Colors.black,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: '${data['type']}d',
+                                            style: Env.textStyles.labelText
+                                                .copyWith(
+                                              color: Colors.black,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: ' your post.',
+                                            style: Env.textStyles.labelText
+                                                .copyWith(
+                                              color: Colors.black,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                      TextSpan(
-                                        text: 'has ',
-                                        style:
-                                            Env.textStyles.labelText.copyWith(
-                                          color: Colors.black,
-                                          fontFamily: "Roboto",
-                                        ),
+                                    ),
+                                    subtitle: Text(timeago.format(time)),
+                                    leading: CircleAvatar(
+                                      backgroundColor: Colors.black,
+                                      backgroundImage:
+                                          CachedNetworkImageProvider(
+                                        data['userImage'],
                                       ),
-                                      TextSpan(
-                                        text: '${data['type']}d',
-                                        style:
-                                            Env.textStyles.labelText.copyWith(
-                                          color: Colors.black,
-                                          fontFamily: "Roboto",
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: ' your post.',
-                                        style:
-                                            Env.textStyles.labelText.copyWith(
-                                          color: Colors.black,
-                                          fontFamily: "Roboto",
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                subtitle: Text(timeago.format(time)),
-                                leading: CircleAvatar(
-                                  backgroundColor: Colors.black,
-                                  backgroundImage: CachedNetworkImageProvider(
-                                    data['userImage'],
-                                  ),
-                                ),
-                                trailing: CachedNetworkImage(
-                                  imageUrl: data["postImage"],
-                                  height: 50,
-                                  width: 40,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              const Divider(thickness: 1),
-                            ],
-                          );
-                        } else if (data['type'] == 'comment') {
-                          return Column(
-                            children: [
-                              ListTile(
-                                title: RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: '${data['userName']} ',
-                                        style: Env.textStyles.text.copyWith(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black,
-                                          fontFamily: "Roboto",
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: 'has commented ',
-                                        style:
-                                            Env.textStyles.labelText.copyWith(
-                                          color: Colors.black,
-                                          fontFamily: "Roboto",
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '${data['commentData']} ',
-                                        style: Env.textStyles.text.copyWith(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black,
-                                          fontFamily: "Roboto",
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: 'on your post',
-                                        style:
-                                            Env.textStyles.labelText.copyWith(
-                                          color: Colors.black,
-                                          fontFamily: "Roboto",
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                subtitle: Padding(
-                                  padding: const EdgeInsets.only(top: 4.0),
-                                  child: Text(
-                                    timeago.format(time),
-                                    style: Env.textStyles.labelText.copyWith(
-                                      fontSize: 12,
+                                    ),
+                                    trailing: CachedNetworkImage(
+                                      imageUrl: data["postImage"],
+                                      height: 50,
+                                      width: 40,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                ),
-                                leading: CircleAvatar(
-                                  backgroundColor: Colors.black,
-                                  maxRadius: 22,
-                                  backgroundImage: CachedNetworkImageProvider(
-                                    data['userImage'],
+                                  const Divider(thickness: 1),
+                                ],
+                              );
+                            } else if (data['type'] == 'comment') {
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    title: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: '${data['userName']} ',
+                                            style: Env.textStyles.text.copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: 'has commented ',
+                                            style: Env.textStyles.labelText
+                                                .copyWith(
+                                              color: Colors.black,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: '${data['commentData']} ',
+                                            style: Env.textStyles.text.copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: 'on your post',
+                                            style: Env.textStyles.labelText
+                                                .copyWith(
+                                              color: Colors.black,
+                                              fontFamily: "Roboto",
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    subtitle: Padding(
+                                      padding: const EdgeInsets.only(top: 4.0),
+                                      child: Text(
+                                        timeago.format(time),
+                                        style:
+                                            Env.textStyles.labelText.copyWith(
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                    leading: CircleAvatar(
+                                      backgroundColor: Colors.black,
+                                      maxRadius: 22,
+                                      backgroundImage:
+                                          CachedNetworkImageProvider(
+                                        data['userImage'],
+                                      ),
+                                    ),
+                                    trailing: CachedNetworkImage(
+                                      imageUrl: data["postImage"],
+                                      height: 50,
+                                      width: 40,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
+                                  const Divider(thickness: 1),
+                                ],
+                              );
+                            } else {
+                              return Container();
+                            }
+                          },
+                        );
+                      }
+                      return ListView.builder(
+                        itemCount: 10,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              ListTile(
+                                title: Shimmer.fromColors(
+                                  child: Container(
+                                    height: 16,
+                                    color: Colors.grey[300],
+                                  ),
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
                                 ),
-                                trailing: CachedNetworkImage(
-                                  imageUrl: data["postImage"],
-                                  height: 50,
-                                  width: 40,
-                                  fit: BoxFit.cover,
+                                subtitle: Shimmer.fromColors(
+                                  child: Container(
+                                    height: 16,
+                                    color: Colors.grey[300],
+                                  ),
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                ),
+                                leading: Shimmer.fromColors(
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.grey[300],
+                                    radius: 26,
+                                  ),
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                ),
+                                trailing: Shimmer.fromColors(
+                                  child: Container(
+                                    color: Colors.grey[300],
+                                    height: 50,
+                                    width: 40,
+                                  ),
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
                                 ),
                               ),
-                              const Divider(thickness: 1),
+                              Shimmer.fromColors(
+                                child: Divider(
+                                  thickness: 1,
+                                  color: Colors.grey[300],
+                                ),
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
+                              ),
                             ],
                           );
-                        } else {
-                          return Container();
-                        }
-                      },
-                    );
-                  } else {
-                    return ListView.builder(
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            ListTile(
-                              title: Shimmer.fromColors(
-                                child: Container(
-                                  height: 16,
-                                  color: Colors.grey[300],
-                                ),
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!,
-                              ),
-                              subtitle: Shimmer.fromColors(
-                                child: Container(
-                                  height: 16,
-                                  color: Colors.grey[300],
-                                ),
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!,
-                              ),
-                              leading: Shimmer.fromColors(
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.grey[300],
-                                  radius: 26,
-                                ),
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!,
-                              ),
-                              trailing: Shimmer.fromColors(
-                                child: Container(
-                                  color: Colors.grey[300],
-                                  height: 50,
-                                  width: 40,
-                                ),
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!,
-                              ),
-                            ),
-                            Shimmer.fromColors(
-                              child: Divider(
-                                thickness: 1,
+                        },
+                      );
+                    })
+                : ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          ListTile(
+                            title: Shimmer.fromColors(
+                              child: Container(
+                                height: 16,
                                 color: Colors.grey[300],
                               ),
                               baseColor: Colors.grey[300]!,
                               highlightColor: Colors.grey[100]!,
                             ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-              )
+                            subtitle: Shimmer.fromColors(
+                              child: Container(
+                                height: 16,
+                                color: Colors.grey[300],
+                              ),
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                            ),
+                            leading: Shimmer.fromColors(
+                              child: CircleAvatar(
+                                backgroundColor: Colors.grey[300],
+                                radius: 26,
+                              ),
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                            ),
+                            trailing: Shimmer.fromColors(
+                              child: Container(
+                                color: Colors.grey[300],
+                                height: 50,
+                                width: 40,
+                              ),
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                            ),
+                          ),
+                          Shimmer.fromColors(
+                            child: Divider(
+                              thickness: 1,
+                              color: Colors.grey[300],
+                            ),
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                          ),
+                        ],
+                      );
+                    },
+                  )
             : const NoInternet(),
       ),
     );

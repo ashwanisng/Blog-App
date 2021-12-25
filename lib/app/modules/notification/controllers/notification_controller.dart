@@ -19,7 +19,7 @@ class NotificationController extends GetxController {
         .orderBy('timestamp', descending: true)
         .get();
 
-    return snapshot.docs;
+    return snapshot.docs.length;
   }
 
   @override

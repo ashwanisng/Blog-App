@@ -57,13 +57,13 @@ class PostService extends GetxController {
         .collection('userPosts')
         .get()
         .then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         if (element.data()['likes'][auth.currentUser!.uid] == null) {
           _isLiked = false;
         } else {
           _isLiked = element.data()['likes'][auth.currentUser!.uid];
         }
-      });
+      }
     });
 
     if (_isLiked) {
@@ -143,7 +143,7 @@ class PostService extends GetxController {
     }
   }
 
-  var id = Uuid().v4();
+  var id = const Uuid().v4();
 
   Future<void> uploadUserPost(dynamic posts) async {
     try {
@@ -173,7 +173,7 @@ class PostService extends GetxController {
       );
     } finally {
       isUploading.value = false;
-      id = Uuid().v4();
+      id = const Uuid().v4();
     }
   }
 }

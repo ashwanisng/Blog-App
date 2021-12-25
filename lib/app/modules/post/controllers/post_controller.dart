@@ -6,6 +6,7 @@ import 'package:blog_app/app/global/firebase/database/follower_following_db.dart
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
 
 class PostController extends GetxController {
@@ -59,6 +60,15 @@ class PostController extends GetxController {
     }
 
     commentController.clear();
+  }
+
+  Future<void> shareFun(dynamic link, String title, String text) async {
+    await FlutterShare.share(
+      title: title,
+      text: text,
+      linkUrl: link,
+      chooserTitle: 'Everywhere',
+    );
   }
 
   @override

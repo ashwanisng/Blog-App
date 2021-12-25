@@ -13,6 +13,7 @@ class Footer extends StatelessWidget {
   final Function()? onLikeOnPressed;
   // final Function()? onDislikeOnPressed;
   final Function()? onCommentOnPressed;
+  final Function()? onShareOnPressed;
 
   // ignore: use_key_in_widget_constructors
   const Footer({
@@ -23,6 +24,7 @@ class Footer extends StatelessWidget {
     // required this.onDislikeOnPressed,
     required this.onCommentOnPressed,
     required this.likeIcon,
+    required this.onShareOnPressed,
     // required this.dislikeIcon,
   });
 
@@ -56,14 +58,11 @@ class Footer extends StatelessWidget {
             ],
           ),
           IconButton(
-            icon: Icon(
-              CupertinoIcons.share,
-              color: Env.colors.primaryGreen,
-            ),
-            onPressed: () {
-              Get.back();
-            },
-          ),
+              icon: Icon(
+                CupertinoIcons.share,
+                color: Env.colors.primaryGreen,
+              ),
+              onPressed: onShareOnPressed),
         ],
       ),
     );

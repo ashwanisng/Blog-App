@@ -38,7 +38,7 @@ class ProfileView extends GetView<ProfileController> {
       ),
       body: Obx(
         () => controller.networkController.isInternetConnected.isTrue
-            ? ListView(
+            ? Column(
                 children: [
                   Stack(
                     clipBehavior: Clip.none,

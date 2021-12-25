@@ -159,6 +159,13 @@ class HomeScreenView extends GetView<HomeController> {
                                       ),
                                       comments: 0,
                                       onCommentOnPressed: () {},
+                                      onShareOnPressed: () {
+                                        controller.shareFun(
+                                          data["postUrl"],
+                                          data["nameOfUser"],
+                                          data["caption"],
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),

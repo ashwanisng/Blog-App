@@ -1,9 +1,8 @@
-import 'package:blog_app/app/modules/entry/bindings/entry_binding.dart';
 import 'package:get/get.dart';
 
 import 'package:blog_app/app/modules/create_post/bindings/create_post_binding.dart';
 import 'package:blog_app/app/modules/create_post/views/create_post_view.dart';
-
+import 'package:blog_app/app/modules/entry/bindings/entry_binding.dart';
 import 'package:blog_app/app/modules/entry/views/entry_view.dart';
 import 'package:blog_app/app/modules/explore/bindings/explore_binding.dart';
 import 'package:blog_app/app/modules/explore/views/explore_view.dart';

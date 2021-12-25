@@ -7,6 +7,7 @@ import 'package:blog_app/app/global/firebase/database/follower_following_db.dart
 import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -43,6 +44,15 @@ class HomeController extends GetxController {
       ),
     );
     bottomBannerAd.load();
+  }
+
+  Future<void> shareFun(dynamic link, String title, String text) async {
+    await FlutterShare.share(
+      title: title,
+      text: text,
+      linkUrl: link,
+      chooserTitle: 'Everywhere',
+    );
   }
 
   @override
