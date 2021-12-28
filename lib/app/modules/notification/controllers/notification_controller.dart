@@ -11,7 +11,9 @@ class NotificationController extends GetxController {
   NetworkController networkController = Get.find<NetworkController>();
   UserDbController userDb = Get.find<UserDbController>();
 
-  getNotificationFeed() async {
+  bool isEmpty = true;
+
+  Future<void> getNotificationFeed() async {
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('notifications')
         .doc(userDb.userData[0]['uid'])
@@ -19,12 +21,17 @@ class NotificationController extends GetxController {
         .orderBy('timestamp', descending: true)
         .get();
 
-    return snapshot.docs.length;
+    if (snapshot.docs.isEmpty) {
+      isEmpty = true;
+    } else {
+      isEmpty = false;
+    }
   }
 
   @override
   void onInit() {
     super.onInit();
+    getNotificationFeed();
   }
 
   @override

@@ -28,7 +28,7 @@ class NotificationView extends GetView<NotificationController> {
       ),
       body: Obx(
         () => controller.networkController.isInternetConnected.isTrue
-            ? controller.getNotificationFeed() == 0
+            ? controller.isEmpty == false
                 ? StreamBuilder(
                     stream: FirebaseFirestore.instance
                         .collection('notifications')
@@ -180,65 +180,20 @@ class NotificationView extends GetView<NotificationController> {
                                 ],
                               );
                             } else {
-                              return Container();
+                              return const NoNewNotification();
                             }
                           },
                         );
+                      } else if (!snapshot.hasData) {
+                        return const NoNewNotification();
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
                       }
-                      return ListView.builder(
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              ListTile(
-                                title: Shimmer.fromColors(
-                                  child: Container(
-                                    height: 16,
-                                    color: Colors.grey[300],
-                                  ),
-                                  baseColor: Colors.grey[300]!,
-                                  highlightColor: Colors.grey[100]!,
-                                ),
-                                subtitle: Shimmer.fromColors(
-                                  child: Container(
-                                    height: 16,
-                                    color: Colors.grey[300],
-                                  ),
-                                  baseColor: Colors.grey[300]!,
-                                  highlightColor: Colors.grey[100]!,
-                                ),
-                                leading: Shimmer.fromColors(
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.grey[300],
-                                    radius: 26,
-                                  ),
-                                  baseColor: Colors.grey[300]!,
-                                  highlightColor: Colors.grey[100]!,
-                                ),
-                                trailing: Shimmer.fromColors(
-                                  child: Container(
-                                    color: Colors.grey[300],
-                                    height: 50,
-                                    width: 40,
-                                  ),
-                                  baseColor: Colors.grey[300]!,
-                                  highlightColor: Colors.grey[100]!,
-                                ),
-                              ),
-                              Shimmer.fromColors(
-                                child: Divider(
-                                  thickness: 1,
-                                  color: Colors.grey[300],
-                                ),
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!,
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    })
-                : const NoNewNotification()
+                    },
+                  )
+                : NoNewNotification()
             : const NoInternet(),
       ),
     );
