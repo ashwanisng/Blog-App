@@ -13,6 +13,7 @@ import 'package:blog_app/app/modules/notification/controllers/notification_contr
 import 'package:blog_app/app/modules/post/controllers/post_controller.dart';
 import 'package:blog_app/app/modules/profile/controllers/editprofile_controller.dart';
 import 'package:blog_app/app/modules/profile/controllers/profile_controller.dart';
+import 'package:blog_app/app/modules/profile/controllers/viewuserpost_controller.dart';
 import 'package:blog_app/app/modules/register/controllers/register_controller.dart';
 import 'package:get/get.dart';
 
@@ -96,6 +97,11 @@ class GlobalBinding extends Bindings {
 
     Get.lazyPut<CommentDbController>(
       () => CommentDbController(),
+      fenix: true,
+    );
+
+    Get.lazyPut<ViewUserPostController>(
+      () => ViewUserPostController(),
       fenix: true,
     );
   }

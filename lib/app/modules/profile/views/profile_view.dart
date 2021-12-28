@@ -1,5 +1,6 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/profile/views/components/edit_profile.dart';
+import 'package:blog_app/app/modules/profile/views/components/view_user_post.dart';
 import 'package:blog_app/app/utils/no_internet.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -320,7 +321,6 @@ class ProfileView extends GetView<ProfileController> {
                             .snapshots(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          print(snapshot.data!.docs.length);
                           if (snapshot.hasData) {
                             return GridView.builder(
                               physics: const BouncingScrollPhysics(),
@@ -330,16 +330,31 @@ class ProfileView extends GetView<ProfileController> {
                                 crossAxisCount: 3,
                               ),
                               itemBuilder: (context, index) {
+                                var data = snapshot.data!.docs[index];
                                 return Padding(
                                   padding:
                                       const EdgeInsets.symmetric(horizontal: 8),
-                                  child: SizedBox(
-                                    height: 100,
-                                    width: 100,
-                                    child: CachedNetworkImage(
-                                      imageUrl: snapshot.data!.docs[index]
-                                          ['postUrl'],
-                                      fit: BoxFit.cover,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(
+                                        () => const ViewUserPost(),
+                                        arguments: {
+                                          'postUrl': data['postUrl'],
+                                          'createdAt': data['createdAt'],
+                                          'postId': data['id'],
+                                          'postOwnerName': data['nameOfUser'],
+                                          'caption': data['caption'],
+                                        },
+                                      );
+                                    },
+                                    child: SizedBox(
+                                      height: 100,
+                                      width: 100,
+                                      child: CachedNetworkImage(
+                                        imageUrl: snapshot.data!.docs[index]
+                                            ['postUrl'],
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 );
