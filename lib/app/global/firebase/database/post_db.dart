@@ -118,6 +118,24 @@ class PostService extends GetxController {
     }
   }
 
+  var isEmpty = false.obs;
+
+  Future<void> getNotificationFeed() async {
+    var snapshot = FirebaseFirestore.instance
+        .collection('notifications')
+        .doc(userDbController.userData[0]['uid'])
+        .collection("notifications")
+        .get()
+        .then((value) {
+      print("object");
+      if (value.docs.isEmpty) {
+        isEmpty.value = true;
+      } else {
+        isEmpty.value = false;
+      }
+    });
+  }
+
   addLikeToNotificationFeed(
       {required String postOwnerId,
       required String postId,

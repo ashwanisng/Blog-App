@@ -1,8 +1,11 @@
 // ignore_for_file: unnecessary_overrides
 
 import 'package:blog_app/app/data/service/network_controller.dart';
+import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
+import 'package:blog_app/app/modules/post/controllers/post_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NotificationController extends GetxController {
@@ -10,28 +13,13 @@ class NotificationController extends GetxController {
 
   NetworkController networkController = Get.find<NetworkController>();
   UserDbController userDb = Get.find<UserDbController>();
-
-  bool isEmpty = true;
-
-  Future<void> getNotificationFeed() async {
-    QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection('notifications')
-        .doc(userDb.userData[0]['uid'])
-        .collection("notifications")
-        .orderBy('timestamp', descending: true)
-        .get();
-
-    if (snapshot.docs.isEmpty) {
-      isEmpty = true;
-    } else {
-      isEmpty = false;
-    }
-  }
+  PostService postService = Get.find<PostService>();
 
   @override
   void onInit() {
+    // await postService.getNotificationFeed();
+    print(postService.isEmpty.value);
     super.onInit();
-    getNotificationFeed();
   }
 
   @override
