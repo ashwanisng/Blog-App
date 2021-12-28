@@ -27,7 +27,8 @@ class CreatePostController extends GetxController {
   FirebaseStorage storage = FirebaseStorage.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   late var imagePath = ''.obs;
-  late String downloadUrl;
+  var downloadUrl = ''.obs;
+  late File imageFile;
 
   // Uuid uuid = const Uuid();
 
@@ -36,13 +37,13 @@ class CreatePostController extends GetxController {
 
   // var id = const Uuid().v4();
 
-  void createPost() {
+  void createPost() async {
     postService.uploadUserPost(
       PostModel(
         id: postService.id,
         caption: captionController.text,
         location: locationController.text,
-        postUrl: downloadUrl,
+        postUrl: await uploadImageToDatabase(),
         userId: firebaseAuth.currentUser!.uid,
         likes: {
           firebaseAuth.currentUser!.uid: false,
@@ -59,6 +60,7 @@ class CreatePostController extends GetxController {
     captionController.clear();
     locationController.clear();
     imagePath.value = '';
+    downloadUrl.value = '';
   }
 
   void getCurrentLocation() async {
@@ -96,28 +98,28 @@ class CreatePostController extends GetxController {
     locationController.text = formatedAdress;
   }
 
-  void getImageFromDevice(ImageSource source) async {
+  Future<String> uploadImageToDatabase() async {
+    try {
+      postService.isUploading.value = true;
+      var snapshot = await storage
+          .ref()
+          .child('userPosts/${imageFile.path.split('/').last}')
+          .putFile(imageFile);
+      return await snapshot.ref.getDownloadURL();
+    } catch (e) {
+      return Future.error(e);
+    } finally {
+      postService.isUploading.value = false;
+    }
+  }
+
+  getImageFromDevice(ImageSource source) async {
     var imagePicker = await ImagePicker().pickImage(source: source);
 
     if (imagePicker != null) {
-      final imageFile = File(imagePicker.path);
+      imageFile = File(imagePicker.path);
 
       imagePath.value = imagePicker.path;
-
-      var snapshot = await storage
-          .ref()
-          .child('userPosts/${imagePicker.name}')
-          .putFile(imageFile);
-
-      downloadUrl = await snapshot.ref.getDownloadURL();
-
-      Get.snackbar(
-        'Success',
-        'Image Selected',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.black,
-        colorText: Colors.white,
-      );
     } else {
       Get.snackbar(
         'Error',

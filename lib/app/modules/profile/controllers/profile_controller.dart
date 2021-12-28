@@ -20,15 +20,14 @@ class ProfileController extends GetxController {
   PostService postService = Get.find<PostService>();
 
   @override
-  void onInit() {
-    userDbController.fetchAllUserDetails();
-
-    followerFollowingDb
+  void onInit() async {
+    await userDbController.fetchAllUserDetails();
+    await followerFollowingDb
         .getFollowersCountOfViewedUser(userDbController.userData[0]['uid']);
-    followerFollowingDb
+    await followerFollowingDb
         .getFollowingCountOfViwedUser(userDbController.userData[0]['uid']);
 
-    postService.getUserPostCount(userDbController.userData[0]['uid']);
+    await postService.getUserPostCount(userDbController.userData[0]['uid']);
     super.onInit();
   }
 
