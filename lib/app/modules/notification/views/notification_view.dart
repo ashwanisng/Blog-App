@@ -4,7 +4,6 @@ import 'package:blog_app/app/utils/no_new_notification.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:get/get.dart';
 
@@ -31,7 +30,7 @@ class NotificationView extends GetView<NotificationController> {
             ? StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('notifications')
-                    .doc(controller.userDb.userData[0]['uid'])
+                    .doc(controller.auth.currentUser!.uid)
                     .collection("notifications")
                     .orderBy('timestamp', descending: true)
                     .limit(50)

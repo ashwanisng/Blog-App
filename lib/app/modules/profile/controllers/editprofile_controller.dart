@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:blog_app/app/data/model/user.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
+import 'package:blog_app/app/modules/profile/views/profile_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -28,19 +29,35 @@ class EditProfileController extends GetxController {
 
   UserDbController userDb = Get.find<UserDbController>();
 
-  uploadUserDetails() {
+  uploadUserDetails() async {
     userDb.uploadUserData(
       UserModel(
         uid: auth.currentUser!.uid,
         name: nameController.text.trim(),
         email: emailController.text.trim(),
-        photoUrl: downloadUrl,
+        photoUrl: await uploadProfilePicToDatabse(),
         userName: usernameController.text.trim(),
         bio: bioController.text.trim(),
         location: locationController.text.trim(),
         isFollowing: false,
       ),
     );
+    Get.offAll(() => const ProfileView());
+  }
+
+  Future<String> uploadProfilePicToDatabse() async {
+    try {
+      userDb.isUserDataUploading.value = true;
+      var snapshot = await storage
+          .ref()
+          .child('profileimage/${file.path.split('/').last}')
+          .putFile(file);
+      return await snapshot.ref.getDownloadURL();
+    } catch (e) {
+      return Future.error(e);
+    } finally {
+      userDb.isUserDataUploading.value = false;
+    }
   }
 
   Future selectProfileImage(ImageSource imageSource) async {
@@ -55,22 +72,6 @@ class EditProfileController extends GetxController {
         selectImagePath.value = pickedFile.path;
 
         file = File(selectImagePath.value);
-//  upload image to firebase
-
-        var snapshot = await storage
-            .ref()
-            .child('profileimage/${pickedFile.name}')
-            .putFile(file);
-
-        downloadUrl = await snapshot.ref.getDownloadURL();
-
-        Get.snackbar(
-          'Success',
-          'Image Selected',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.black,
-          colorText: Colors.white,
-        );
       } else {
         Get.snackbar(
           'Error',

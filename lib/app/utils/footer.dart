@@ -1,7 +1,6 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class Footer extends StatelessWidget {
   final int? likes;

@@ -13,8 +13,11 @@ class UserDbController extends GetxController {
   var userData = [].obs;
   var searchResultList = [].obs;
 
+  var isUserDataUploading = false.obs;
+
   Future<void> uploadUserData(dynamic user) async {
     try {
+      isUserDataUploading.value = true;
       await userCollection.add(user.toJson());
 
       Get.snackbar(
@@ -34,6 +37,8 @@ class UserDbController extends GetxController {
         colorText: Colors.white,
         isDismissible: true,
       );
+    } finally {
+      isUserDataUploading.value = false;
     }
   }
 

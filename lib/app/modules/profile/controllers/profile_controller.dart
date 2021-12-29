@@ -5,6 +5,7 @@ import 'package:blog_app/app/global/firebase/auth/auth.dart';
 import 'package:blog_app/app/global/firebase/database/follower_following_db.dart';
 import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:get/get.dart';
 
@@ -19,15 +20,17 @@ class ProfileController extends GetxController {
 
   PostService postService = Get.find<PostService>();
 
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   void onInit() async {
     await userDbController.fetchAllUserDetails();
     await followerFollowingDb
-        .getFollowersCountOfViewedUser(userDbController.userData[0]['uid']);
+        .getFollowersCountOfViewedUser(auth.currentUser!.uid);
     await followerFollowingDb
-        .getFollowingCountOfViwedUser(userDbController.userData[0]['uid']);
+        .getFollowingCountOfViwedUser(auth.currentUser!.uid);
 
-    await postService.getUserPostCount(userDbController.userData[0]['uid']);
+    await postService.getUserPostCount(auth.currentUser!.uid);
     super.onInit();
   }
 

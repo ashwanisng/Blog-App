@@ -2,6 +2,7 @@ import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/profile/views/components/edit_profile.dart';
 import 'package:blog_app/app/modules/profile/views/components/view_user_post.dart';
 import 'package:blog_app/app/utils/no_internet.dart';
+import 'package:blog_app/app/utils/no_post_avilable.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -310,18 +311,87 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                     ),
                     const Divider(thickness: 1),
-                    Container(
+                    SizedBox(
                       height: MediaQuery.of(context).size.height * 0.8,
                       child: StreamBuilder(
                         stream: FirebaseFirestore.instance
                             .collection('posts')
-                            .doc(controller.userDbController.userData[0]['uid'])
+                            .doc(controller.auth.currentUser!.uid)
                             .collection('userPosts')
                             .orderBy('createdAt', descending: true)
                             .snapshots(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.hasData) {
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text(
+                                'Error: ${snapshot.error}',
+                                style: Env.textStyles.text,
+                              ),
+                            );
+                          }
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (snapshot.data!.docs.isEmpty) {
+                            return const NoPostAvilable();
+                          }
+
+                          return GridView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                            ),
+                            itemBuilder: (context, index) {
+                              var data = snapshot.data!.docs[index];
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.to(
+                                      () => const ViewUserPost(),
+                                      arguments: {
+                                        'postUrl': data['postUrl'],
+                                        'createdAt': data['createdAt'],
+                                        'postId': data['id'],
+                                        'postOwnerName': data['nameOfUser'],
+                                        'caption': data['caption'],
+                                      },
+                                    );
+                                  },
+                                  child: SizedBox(
+                                    height: 100,
+                                    width: 100,
+                                    child: CachedNetworkImage(
+                                      imageUrl: snapshot.data!.docs[index]
+                                          ['postUrl'],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: snapshot.data!.docs.length,
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              )
+            : const NoInternet(),
+      ),
+    );
+  }
+}
+/**
+ * if (snapshot.hasData) {
                             return GridView.builder(
                               physics: const BouncingScrollPhysics(),
                               shrinkWrap: true,
@@ -361,21 +431,5 @@ class ProfileView extends GetView<ProfileController> {
                               },
                               itemCount: snapshot.data!.docs.length,
                             );
-                          } else {
-                            return const SizedBox(
-                              child: Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            );
                           }
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              )
-            : const NoInternet(),
-      ),
-    );
-  }
-}
+ */
