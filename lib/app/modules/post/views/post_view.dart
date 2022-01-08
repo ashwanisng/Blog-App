@@ -1,7 +1,9 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/home/views/components/header.dart';
+import 'package:blog_app/app/modules/viewuser/views/viewuser_view.dart';
 import 'package:blog_app/app/utils/footer.dart';
 import 'package:blog_app/app/utils/no_internet.dart';
+import 'package:blog_app/app/utils/view_user_template.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -122,9 +124,34 @@ class PostView extends GetView<PostController> {
                             itemBuilder: (context, index) {
                               var data = snapshot.data!.docs[index];
                               return ListTile(
-                                leading: CircleAvatar(
-                                  backgroundImage: CachedNetworkImageProvider(
-                                    data['userImageUrl'],
+                                leading: GestureDetector(
+                                  onTap: () {
+                                    Get.to(
+                                      () => ViewuserView(),
+                                      arguments: {
+                                        'name': data['userName'],
+                                        'image': data['userImageUrl'],
+                                        "uid": data['userId'],
+                                      },
+                                    );
+                                    controller.followerFollowingDb
+                                        .checkIfFollowing(data['userId']);
+
+                                    controller.followerFollowingDb
+                                        .getFollowersCountOfViewedUser(
+                                            data['userId']);
+
+                                    controller.followerFollowingDb
+                                        .getFollowingCountOfViwedUser(
+                                            data['userId']);
+
+                                    controller.postService
+                                        .getUserPostCount(data['userId']);
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundImage: CachedNetworkImageProvider(
+                                      data['userImageUrl'],
+                                    ),
                                   ),
                                 ),
                                 title: Text(

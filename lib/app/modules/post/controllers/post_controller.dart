@@ -3,6 +3,7 @@
 import 'package:blog_app/app/data/service/network_controller.dart';
 import 'package:blog_app/app/global/firebase/database/comment_db_controller.dart';
 import 'package:blog_app/app/global/firebase/database/follower_following_db.dart';
+import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class PostController extends GetxController {
   CommentDbController commentDbController = Get.find<CommentDbController>();
   UserDbController userDbController = Get.find<UserDbController>();
   FollowerFollowingDb followerFollowingDb = Get.find<FollowerFollowingDb>();
+  PostService postService = Get.find<PostService>();
 
   uploadComment() async {
     if (commentController.text.isNotEmpty) {

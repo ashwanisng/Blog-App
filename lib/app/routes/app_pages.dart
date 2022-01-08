@@ -18,6 +18,8 @@ import 'package:blog_app/app/modules/profile/bindings/profile_binding.dart';
 import 'package:blog_app/app/modules/profile/views/profile_view.dart';
 import 'package:blog_app/app/modules/register/bindings/register_binding.dart';
 import 'package:blog_app/app/modules/register/views/register_view.dart';
+import 'package:blog_app/app/modules/viewuser/bindings/viewuser_binding.dart';
+import 'package:blog_app/app/modules/viewuser/views/viewuser_view.dart';
 
 // ignore_for_file: constant_identifier_names, prefer_const_constructors
 
@@ -71,6 +73,11 @@ class AppPages {
       name: _Paths.ENTRY,
       page: () => EntryView(),
       binding: EntryBinding(),
+    ),
+    GetPage(
+      name: _Paths.VIEWUSER,
+      page: () => ViewuserView(),
+      binding: ViewuserBinding(),
     ),
   ];
 }

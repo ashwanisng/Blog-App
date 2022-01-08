@@ -3,6 +3,7 @@
 import 'package:blog_app/app/data/service/network_controller.dart';
 import 'package:blog_app/app/global/firebase/database/comment_db_controller.dart';
 import 'package:blog_app/app/global/firebase/database/follower_following_db.dart';
+import 'package:blog_app/app/global/firebase/database/post_db.dart';
 import 'package:blog_app/app/global/firebase/database/user_db.dart';
 import 'package:blog_app/app/modules/post/controllers/post_controller.dart';
 import 'package:flutter_share/flutter_share.dart';
@@ -19,6 +20,7 @@ class ViewUserPostController extends GetxController {
   CommentDbController commentDbController = Get.find<CommentDbController>();
   UserDbController userDbController = Get.find<UserDbController>();
   FollowerFollowingDb followerFollowingDb = Get.find<FollowerFollowingDb>();
+  PostService postService = Get.find<PostService>();
   PostController postController = Get.find<PostController>();
 
   Future<void> shareFun(dynamic link, String title, String text) async {
