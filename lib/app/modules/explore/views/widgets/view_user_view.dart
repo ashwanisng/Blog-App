@@ -1,5 +1,9 @@
 import 'package:blog_app/app/core/enviroment/env.dart';
 import 'package:blog_app/app/modules/explore/controllers/view_user_controller.dart';
+import 'package:blog_app/app/modules/profile/views/components/view_user_post.dart';
+import 'package:blog_app/app/utils/no_post_avilable.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +21,7 @@ class ViewUser extends GetView<ViewUserController> {
           color: Env.colors.primaryIndigo,
         ),
       ),
-      body: Column(
+      body: ListView(
         children: [
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.2,
@@ -190,6 +194,74 @@ class ViewUser extends GetView<ViewUserController> {
             ),
           ),
           const Divider(thickness: 2),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('posts')
+                  .doc(controller.uid)
+                  .collection('userPosts')
+                  .orderBy('createdAt', descending: true)
+                  .snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      'Error: ${snapshot.error}',
+                      style: Env.textStyles.text,
+                    ),
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.data!.docs.isEmpty) {
+                  return const NoPostAvilable();
+                }
+
+                return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                  ),
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    var data = snapshot.data!.docs[index];
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.to(
+                            () => const ViewUserPost(),
+                            arguments: {
+                              'postUrl': data['postUrl'],
+                              'createdAt': data['createdAt'],
+                              'postId': data['id'],
+                              'postOwnerName': data['nameOfUser'],
+                              'caption': data['caption'],
+                            },
+                          );
+                        },
+                        child: SizedBox(
+                          height: 150,
+                          width: 150,
+                          child: CachedNetworkImage(
+                            imageUrl: snapshot.data!.docs[index]['postUrl'],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          )
         ],
       ),
     );

@@ -25,6 +25,8 @@ class ViewUserController extends GetxController {
     bio = data['bio'];
     image = data['image'];
     uid = data['uid'];
+
+    print(uid);
   }
 
   @override
