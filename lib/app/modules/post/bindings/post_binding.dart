@@ -1,4 +1,3 @@
-import 'package:blog_app/app/modules/explore/controllers/view_user_controller.dart';
 import 'package:blog_app/app/modules/viewuser/controllers/viewuser_controller.dart';
 import 'package:get/get.dart';
 

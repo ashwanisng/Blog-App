@@ -18,6 +18,7 @@ class NetworkController extends GetxController {
     try {
       connectivityResult = await connectivity.checkConnectivity();
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
     return getConnectionStatus(connectivityResult);

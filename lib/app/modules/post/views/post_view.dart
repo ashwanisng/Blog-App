@@ -3,7 +3,6 @@ import 'package:blog_app/app/modules/home/views/components/header.dart';
 import 'package:blog_app/app/modules/viewuser/views/viewuser_view.dart';
 import 'package:blog_app/app/utils/footer.dart';
 import 'package:blog_app/app/utils/no_internet.dart';
-import 'package:blog_app/app/utils/view_user_template.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
