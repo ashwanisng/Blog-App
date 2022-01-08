@@ -118,6 +118,7 @@ class HomeScreenView extends GetView<HomeController> {
                                             MediaQuery.of(context).size.width,
                                         child: CachedNetworkImage(
                                           imageUrl: data['postUrl'],
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),

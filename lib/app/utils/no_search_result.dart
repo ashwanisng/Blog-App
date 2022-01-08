@@ -5,9 +5,13 @@ class NoSearchResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      "assets/images/14_No Search Results.png",
-      fit: BoxFit.cover,
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: Image.asset(
+        "assets/images/14_No Search Results.png",
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

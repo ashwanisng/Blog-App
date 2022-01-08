@@ -52,7 +52,7 @@ class ProfileView extends GetView<ProfileController> {
                           height: MediaQuery.of(context).size.height * 0.15,
                           width: MediaQuery.of(context).size.width,
                           decoration: const BoxDecoration(
-                            color: Colors.deepOrangeAccent,
+                            color: Color(0xff5D6270),
                           ),
                         ),
                         Positioned(
